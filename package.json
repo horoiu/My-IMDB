@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch:sass": "node-sass sass/main.scss css/style.css -w",
+    "devserver": "live-server --browser=firefox",
     "start": "npm-run-all --parallel devserver watch:sass",
     "compile:sass": "node-sass sass/main.scss css/style.comp.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.comp.css -o css/style.prefix.css",
@@ -27,5 +28,8 @@
     "node-sass": "^4.8.3",
     "npm-run-all": "^4.1.2",
     "postcss-cli": "^5.0.0"
+  },
+  "dependencies": {
+    "npm": "^5.8.0"
   }
 }

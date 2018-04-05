@@ -1,0 +1,109 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box; }
+
+html {
+  font-size: 62.5%;
+  padding: 8rem 0; }
+
+body {
+  border: 3px solid yellow;
+  background-image: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3)), url("../img/main-bg.png");
+  background-size: contain;
+  background-position: top;
+  box-sizing: border-box;
+  height: 85vh;
+  width: 80vw;
+  margin: 0 auto; }
+
+body {
+  font-family: 'Lato', Arial, sans-serif;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+  line-height: 150%; }
+
+.heading-1 {
+  font-family: 'Bungee Inline', cursive;
+  font-size: 4rem;
+  font-weight: 400;
+  letter-spacing: .5rem;
+  line-height: 1.7;
+  color: #f7f7f7; }
+
+.heading-2 {
+  font-size: 2.8rem;
+  color: #f7f7f7;
+  margin-bottom: 2rem; }
+
+.hidden {
+  display: none;
+  background-color: yellow; }
+
+.btn, .btn:link, .btn:visited {
+  font-size: 2rem;
+  font-weight: 700;
+  width: 10rem;
+  height: 3rem;
+  border-radius: 20px;
+  border: none;
+  padding: 0 1rem;
+  background-color: #9bc2f5;
+  transition: all .1s; }
+
+.btn:hover {
+  background-color: #958af5;
+  color: #eee;
+  cursor: pointer;
+  transform: translateX(-1px) translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); }
+
+.btn:active, .btn:focus {
+  outline: none;
+  transform: translateX(1px) translateY(2px);
+  box-shadow: 0 0.3rem 0.7rem rgba(0, 0, 0, 0.4); }
+
+.btn:first-of-type {
+  margin-right: 4rem; }
+
+.footer {
+  height: 10rem;
+  background-color: orangered; }
+
+.header {
+  background: rgba(51, 51, 51, 0.75);
+  padding: 2rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+  .header__text-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+  .header__btn-box {
+    display: flex;
+    width: auto;
+    align-items: center;
+    justify-content: space-between; }
+
+.icon {
+  display: inline-block;
+  width: 8rem;
+  height: 8rem;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: #9bc2f5;
+  transition: transform 0.8s cubic-bezier(0.5, 0, 0.07, 1); }
+  .icon:hover {
+    fill: #958af5;
+    transform: scaleX(1.2) scaleY(1.2); }
+
+.section {
+  background-image: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3)), url("../img/sect-bg.jpg");
+  background-size: cover;
+  background-position: top;
+  display: grid;
+  grid-template-rows: 15rem 20rem 20rem;
+  grid-auto-columns: 10rem 30rem 30rem 30rem 10rem; }
