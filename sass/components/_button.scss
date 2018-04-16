@@ -8,7 +8,7 @@
         height: 3rem;
         border-radius: 20px;
         border: none;
-        padding: 0 1rem;
+        padding: 0 1rem .25rem 1rem;
         background-color: $color-primary-light;
         transition: all .1s;
     }
@@ -17,15 +17,17 @@
         background-color: $color-primary;
         color: $color-grey-light-2;
         cursor: pointer;
-        transform: translateX(-1px) translateY(-2px);
+        transform: translateX(-2px) translateY(-3px);
         box-shadow: 0 .5rem 1rem rgba($color-black, .3);
     }
     
-    &:active,
+    &:active {
+        transform: translateX(0px) translateY(0px);
+        box-shadow: 0 .3rem 0.7rem rgba($color-black, .4);
+    }
+
     &:focus {
         outline: none;
-        transform: translateX(1px) translateY(2px);
-        box-shadow: 0 .3rem 0.7rem rgba($color-black, .4);
     }
 
     &:first-of-type {

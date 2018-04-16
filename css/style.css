@@ -6,13 +6,13 @@
   box-sizing: content-box; }
 
 html {
-  font-size: 62.5%;
-  padding: 8rem 0; }
+  font-size: 62.5%; }
 
 body {
   border: 3px solid yellow;
   background-image: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3)), url("../img/main-bg.png");
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-position: top;
   box-sizing: border-box;
   height: 85vh;
@@ -49,7 +49,7 @@ body {
   height: 3rem;
   border-radius: 20px;
   border: none;
-  padding: 0 1rem;
+  padding: 0 1rem .25rem 1rem;
   background-color: #9bc2f5;
   transition: all .1s; }
 
@@ -57,16 +57,35 @@ body {
   background-color: #958af5;
   color: #eee;
   cursor: pointer;
-  transform: translateX(-1px) translateY(-2px);
+  transform: translateX(-2px) translateY(-3px);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); }
 
-.btn:active, .btn:focus {
-  outline: none;
-  transform: translateX(1px) translateY(2px);
+.btn:active {
+  transform: translateX(0px) translateY(0px);
   box-shadow: 0 0.3rem 0.7rem rgba(0, 0, 0, 0.4); }
+
+.btn:focus {
+  outline: none; }
 
 .btn:first-of-type {
   margin-right: 4rem; }
+
+.input-acc {
+  box-sizing: border-box;
+  display: block;
+  width: 60%;
+  margin: 1rem auto;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 3px;
+  outline: none;
+  padding-bottom: 6px; }
+  .input-acc:valid {
+    border: 1.5px solid lightgreen; }
+  .input-acc:invalid {
+    border: 1.5px solid red; }
+  .input-acc:focus {
+    border: 1.5px solid blue; }
 
 .footer {
   height: 10rem;
@@ -99,6 +118,77 @@ body {
   .icon:hover {
     fill: #958af5;
     transform: scaleX(1.2) scaleY(1.2); }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #333;
+  opacity: .8; }
+  .modal__register {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50rem;
+    width: 40rem;
+    background-color: lime;
+    border-radius: 1rem; }
+    .modal__register-heading {
+      position: relative;
+      top: 5rem;
+      text-align: center;
+      font-size: 3rem; }
+      .modal__register-heading:last-of-type {
+        top: 22rem; }
+    .modal__register-inputs {
+      position: relative;
+      top: 8rem; }
+    .modal__register-buttons--register {
+      position: relative;
+      top: 9rem;
+      left: 7rem; }
+    .modal__register-buttons--cancel {
+      position: relative;
+      top: 9rem;
+      left: 4.7rem; }
+    .modal__register-buttons--login {
+      position: relative;
+      top: 23rem;
+      left: 35%; }
+  .modal__login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50rem;
+    width: 40rem;
+    background-color: lime;
+    border-radius: 1rem; }
+    .modal__login-heading {
+      position: relative;
+      top: 5rem;
+      text-align: center;
+      font-size: 3rem; }
+      .modal__login-heading:last-of-type {
+        top: 26rem; }
+    .modal__login-inputs {
+      position: relative;
+      top: 8rem; }
+    .modal__login-buttons--login {
+      position: relative;
+      top: 9rem;
+      left: 7rem; }
+    .modal__login-buttons--cancel {
+      position: relative;
+      top: 9rem;
+      left: 4.7rem; }
+    .modal__login-buttons--register {
+      position: relative;
+      top: 27rem;
+      left: 35%; }
 
 .section {
   background-image: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3)), url("../img/sect-bg.jpg");
