@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
 
     <title>My IMBD</title>
 </head>
-<body>
+<body class="container">
 
     <header class="header">
 
@@ -82,18 +82,24 @@
                     <input type="reset" value="Cancel" class="modal__register-buttons--cancel btn">
                     <input type="button" value="Log-In" class="modal__register-buttons--login btn">
                 </div>
-             <!-- </div> -->
+            <!-- </div> -->
 
         </form>
 
     </section>
 
-    <section class="section">
+    <section class="section-search">
+        <div>Search-Bar</div>
+        <div>Movie type selector</div>
+        <div>Button</div>
+    </section>
+
+    <section class="section-content">
         SECTION
     </section>
 
     <footer class="footer">
-        FOOTER
+        <div>FOOTER</div>
     </footer>
 
     <script src="script/app.js"></script>

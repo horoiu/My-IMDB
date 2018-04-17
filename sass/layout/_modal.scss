@@ -6,6 +6,7 @@
     height: 100vh;
     background: $color-grey-dark-3;
     opacity: .8;
+    z-index: 100;
 
     &__register {
         @include absoluteCenter;
@@ -24,8 +25,7 @@
             &:last-of-type {
                 top: 22rem;
             }
-        }
-        
+        }       
         
         &-inputs {
             position: relative;
@@ -98,7 +98,5 @@
                 left: 35%;
             }
         }
-        
-
     }
 }
