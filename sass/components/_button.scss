@@ -13,7 +13,9 @@
         transition: all .1s;
     }
     
-    &:hover {
+    &:hover,
+    &:focus {
+        outline: none;
         background-color: $color-primary;
         color: $color-grey-light-2;
         cursor: pointer;
@@ -24,10 +26,6 @@
     &:active {
         transform: translateX(0px) translateY(0px);
         box-shadow: 0 .3rem 0.7rem rgba($color-black, .4);
-    }
-
-    &:focus {
-        outline: none;
     }
 
     &:first-of-type {

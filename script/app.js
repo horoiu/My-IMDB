@@ -20,8 +20,8 @@ let UIController  = (function() {
         modal: document.querySelector('.modal'),
         modalLogin: document.querySelector('.modal__login'),
         modalRegister: document.querySelector('.modal__register'),
-        // inputFields: document.querySelectorAll('input[type=text]'),
-        // passwordFields: document.querySelectorAll('input[type=password]'),
+        modalLoginError: document.querySelector('.modal__login-error'),
+        modalRegisterError: document.querySelector('.modal__register-error'),
 
     };
 
@@ -48,6 +48,7 @@ let UIController  = (function() {
         hideModal: function() {
             this.clearAccInputFields();
             this.setModalState(false);
+            this.hideAccErrorMessage();
             
             DOMStrings.modal.classList.add('hidden');
             DOMStrings.modalLogin.classList.add('hidden');
@@ -56,20 +57,33 @@ let UIController  = (function() {
         
         toggleModal: function() {
             this.clearAccInputFields();
+            this.hideAccErrorMessage();
 
             DOMStrings.modalLogin.classList.toggle('hidden');
             DOMStrings.modalRegister.classList.toggle('hidden');
         },
 
         clearAccInputFields: function() {
-            // console.log('clearAccInputFields');
             DOMStrings.modalLogin.reset();
             DOMStrings.modalRegister.reset();
         },
 
         showRegisterError: function(message) {
-            console.log(message);
+            DOMStrings.modalRegisterError.innerHTML = message;
+            DOMStrings.modalRegisterError.classList.remove('hidden');
         },
+
+        showLoginError: function(message) {
+            DOMStrings.modalLoginError.innerHTML = message;
+            DOMStrings.modalLoginError.classList.remove('hidden');
+        },
+
+        hideAccErrorMessage: function() {
+            DOMStrings.modalRegisterError.classList.add('hidden');
+            DOMStrings.modalLoginError.classList.add('hidden');
+        },
+
+
     }
 })();
 
@@ -82,8 +96,8 @@ let userController  = (function(UIctrl) {
     let DOM = UIctrl.getDOMStrings();
 
     let loginRequest = function() {
-        // console.log('LoggingIn inside function');
-        
+        UIctrl.hideAccErrorMessage();
+
         let user, pass, url, data, method;
         user = DOM.loginUser.value;
         pass = DOM.loginPass.value;
@@ -102,10 +116,12 @@ let userController  = (function(UIctrl) {
                 type: method,
                 data: data,
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
+
                 },
                 error: function(response) {
-                    console.log(response);
+                    let message = response.responseJSON.message;
+                    UIctrl.showLoginError(message);
                 },
             })
         });
@@ -116,8 +132,8 @@ let userController  = (function(UIctrl) {
     };
 
     let registerRequest = function() {
-        // console.log('Registering inside function');
-
+        UIctrl.hideAccErrorMessage();
+        
         let user, pass, url, data, method;
         user = DOM.registerUser.value;
         pass = DOM.registerPass1.value;
@@ -140,7 +156,8 @@ let userController  = (function(UIctrl) {
                     console.log(response);
                 },
                 error: function(response) {
-                    console.log(response);
+                    let message = response.responseJSON.message;
+                    UIctrl.showRegisterError(message);
                 },
             })
         });
@@ -200,7 +217,8 @@ let userController  = (function(UIctrl) {
             pass = DOM.loginPass.value;
     
             if (user === '' || pass === '') {
-                console.log('field empty');
+                let message = 'Fields cannot be empty!';
+                UIctrl.showLoginError(message);
                 return false;
             } else return true;
         },
@@ -212,11 +230,11 @@ let userController  = (function(UIctrl) {
             pass2 = DOM.registerPass2.value;
     
             if (user === '' || pass1 === '' || pass2 === '') {
-                let message  = 'field empty';
+                let message  = 'Fields cannot be empty!';
                 UIctrl.showRegisterError(message);
                 return false;
             } else if (pass1 !== pass2) {
-                let message  = 'password mismatch';
+                let message  = 'Please check your password!';
                 UIctrl.showRegisterError(message);
                 return false;
             } else return true;
@@ -251,22 +269,33 @@ let controller = (function(UIctrl, userCtrl) {
         DOM.headerLoginBtn.onclick = function() {
             DOM.modal.classList.remove('hidden');
             DOM.modalLogin.classList.remove('hidden');
+            DOM.loginUser.focus();
             DOM.modalRegister.classList.add('hidden');
-
+            
             UIctrl.setModalState(true);
         };        
         
         DOM.headerRegisterBtn.onclick = function() {
             DOM.modal.classList.remove('hidden');
             DOM.modalRegister.classList.remove('hidden');
+            DOM.registerUser.focus();
             DOM.modalLogin.classList.add('hidden');
 
             UIctrl.setModalState(true);
         };
         
-        DOM.modal.onclick = function(event) {           
-            if (event.srcElement.className === 'modal') {
+        DOM.modal.onclick = function(event) {                      
+            if (event.target.className === 'modal') {
                 UIctrl.hideModal(); 
+            };
+        };
+
+        //hide modal and clear fields if ESCape key is pressed 
+        window.onkeyup = function(event) {
+            let modal = UIctrl.getModalState();
+
+            if (event.keyCode === 27 && modal) {
+                UIctrl.hideModal();
             };
         };
         
@@ -274,7 +303,7 @@ let controller = (function(UIctrl, userCtrl) {
             UIctrl.hideModal();
         };
 
-        DOM.loginLoginBtn.onclick = function() {
+        DOM.loginLoginBtn.onclick = function(event) {
             event.preventDefault();
 
             if (userCtrl.validateLoginFields()) {
@@ -297,7 +326,7 @@ let controller = (function(UIctrl, userCtrl) {
             UIctrl.toggleModal();
         };
 
-        DOM.registerRegisterBtn.onclick = function() {
+        DOM.registerRegisterBtn.onclick = function(event) {
             event.preventDefault();
 
             if (userCtrl.validateRegisterFields()) {

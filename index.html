@@ -50,39 +50,38 @@
     <section class="modal hidden">
         
         <form class="modal__login hidden">
-            <!-- <div class="modal__register-box"> -->
-                <h1 class="modal__login-heading">Log in</h1>
-                <div class="modal__login-inputs">
-                    <input type="text" class="modal__login-inputs--user input-acc" name="user" id="login-user-input" placeholder="username" autocomplete required>
-                    <input type="password" class="modal__login-inputs--pass input-acc" name="password" id="login-user-pass" placeholder="password" required>
-                </div>
-                <h1 class="modal__login-heading">Not registered?</h1>
-                <div class="modal__login-buttons">
-                    <input type="button" value="Log-In" class="modal__login-buttons--login btn">
-                    <input type="reset" value="Cancel" class="modal__login-buttons--cancel btn">
-                    <input type="button" value="Register" class="modal__login-buttons--register btn">
-                </div>
-            <!-- </div> -->
+
+            <h1 class="modal__login-heading">Log in</h1>
+            <div class="modal__login-inputs">
+                <input type="text" class="modal__login-inputs--user input-acc" name="user" id="login-user-input" placeholder="username" autocomplete required>
+                <input type="password" class="modal__login-inputs--pass input-acc" name="password" id="login-user-pass" placeholder="password" required>
+            </div>
+            <span class="modal__login-error error hidden">Error</span>            
+            <h1 class="modal__login-heading">Not registered?</h1>
+            <div class="modal__login-buttons">
+                <input type="button" value="Log-In" class="modal__login-buttons--login btn">
+                <input type="reset" value="Cancel" class="modal__login-buttons--cancel btn">
+                <input type="button" value="Register" class="modal__login-buttons--register btn">
+            </div>
 
         </form>
 
         <form class="modal__register hidden">
         <!-- form class="modal__register hidden" action="https://ancient-caverns-16784.herokuapp.com/auth/register" method="post" -->
 
-            <!-- <div class="modal__register-box"> -->
-                <h1 class="modal__register-heading">Create a new account</h1>
-                <div class="modal__register-inputs">
-                    <input type="text" class="modal__register-inputs--user input-acc" name="user" id="register-user-input" placeholder="username" autocomplete required>
-                    <input type="password" class="modal__register-inputs--pass1 input-acc" name="password1" id="register-user-pass1" placeholder="password" required>
-                    <input type="password" class="modal__register-inputs--pass2 input-acc" name="password2" id="register-user-pass2" placeholder="confirm password" required>
-                </div>
-                <h1 class="modal__register-heading">Already registered?</h1>
-                <div class="modal__register-buttons">
-                    <input type="submit" value="Register" class="modal__register-buttons--register btn">
-                    <input type="reset" value="Cancel" class="modal__register-buttons--cancel btn">
-                    <input type="button" value="Log-In" class="modal__register-buttons--login btn">
-                </div>
-            <!-- </div> -->
+            <h1 class="modal__register-heading">Create a new account</h1>
+            <div class="modal__register-inputs">
+                <input type="text" class="modal__register-inputs--user input-acc" name="user" id="register-user-input" placeholder="username" autocomplete required>
+                <input type="password" class="modal__register-inputs--pass1 input-acc" name="password1" id="register-user-pass1" placeholder="password" required>
+                <input type="password" class="modal__register-inputs--pass2 input-acc" name="password2" id="register-user-pass2" placeholder="confirm password" required>
+            </div>
+            <span class="modal__register-error error hidden">Error</span>
+            <h1 class="modal__register-heading">Already registered?</h1>
+            <div class="modal__register-buttons">
+                <input type="submit" value="Register" class="modal__register-buttons--register btn">
+                <input type="reset" value="Cancel" class="modal__register-buttons--cancel btn">
+                <input type="button" value="Log-In" class="modal__register-buttons--login btn">
+            </div>
 
         </form>
 
@@ -90,12 +89,25 @@
 
     <section class="section-search">
         <div>Search-Bar</div>
-        <div>Movie type selector</div>
         <div>Button</div>
+        <div>Movie type selector</div>
     </section>
 
     <section class="section-content">
-        SECTION
+        <div class="movie movie-1">Movie no.1</div>
+        <div class="movie movie-2">Movie no.2</div>
+        <div class="movie movie-3">Movie no.3</div>
+        <div class="movie movie-4">Movie no.4</div>
+        <div class="movie movie-5">Movie no.5</div>
+        <div class="movie movie-6">Movie no.6</div>
+        <div class="movie movie-7">Movie no.7</div>
+        <div class="movie movie-8">Movie no.8</div>
+        <div class="movie movie-9">Movie no.9</div>
+        <div class="movie movie-10">Movie no.10</div>
+    </section>
+
+    <section class="section-pagination">
+        <div>Pagination</div>
     </section>
 
     <footer class="footer">
