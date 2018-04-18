@@ -2,7 +2,7 @@
 
 let UIController  = (function() {
 
-    let DOMStrings = {
+    const DOMStrings = {
         headerLoginBtn: document.querySelector('.header__btn--login'),
         headerLogoutBtn: document.querySelector('.header__btn--logout'),
         headerRegisterBtn: document.querySelector('.header__btn--register'),
@@ -25,9 +25,7 @@ let UIController  = (function() {
     };
 
     let data = {
-
         modal: false,
-
     };
 
     return {
@@ -103,7 +101,11 @@ let UIController  = (function() {
             DOMStrings.modalRegisterMsg.classList.add('hidden');
         },
 
-
+        toggleHeaderButtons: function() {
+            DOMStrings.headerLoginBtn.classList.toggle('hidden');
+            DOMStrings.headerRegisterBtn.classList.toggle('hidden');
+            DOMStrings.headerLogoutBtn.classList.toggle('hidden');
+        },
     }
 })();
 
@@ -113,10 +115,42 @@ let UIController  = (function() {
 ////////////////// userController
 
 let userController  = (function(UIctrl) {
-    let DOM = UIctrl.getDOMStrings();
+    const DOM = UIctrl.getDOMStrings();
+
+    let setTokenCookie = function(token) {
+        document.cookie = 'accessToken=' +  token;
+    };
+
+    let getTokenCookie = function() {
+        let cookieString, cookiesArray, cookies;
+            
+        cookieString = document.cookie;
+        cookiesArray = cookieString.split('; ');
+        cookies = {};
+        
+        cookiesArray.forEach(function(item) {
+            let cookie= item.split('=');
+            cookies[cookie[0]] = cookie[1];
+
+            // console.log(cookies);
+            // console.log(cookie);
+        });
+
+        const accessToken = cookies.accessToken;
+        
+        return accessToken; 
+        
+        // console.log(`cookieString: ${cookieString}`);
+        // console.log(`cookiesArray: ${cookiesArray}`);
+        // console.log(`cookies: ${cookies}`); 
+    };
+
+    let deleteTokenCookie = function() {
+        document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    };
 
     let loginRequest = function() {
-        let user, pass, url, data, method, message;
+        let user, pass, url, data, method, message, token;
         user = DOM.loginUser.value;
         pass = DOM.loginPass.value;
         url = 'https://ancient-caverns-16784.herokuapp.com/auth/login';
@@ -139,18 +173,19 @@ let userController  = (function(UIctrl) {
                 success: function(response) {
                     UIctrl.hideModalMessage();
                     
-                    // setTimeout for welcome message
                     message = `Welcome back ${user}.` ;
                     UIctrl.showLoginMessage(message, 'status');
+                    
+                    // setTimeout to hideModal
+                    setTimeout(function() {
+                        UIctrl.hideModal()
+                    }, 3000);
 
-                    //hideModa
+                    //toggleHeaderButtons
+                    UIctrl.toggleHeaderButtons();
 
-                    //hideHeaderButtons
-
-                    //show HeaderButtons
-
-                    //setCookie with token             
-
+                    //setCookie with token
+                    setTokenCookie(response.accessToken);            
                 },
                 error: function(response) {
                     UIctrl.hideModalMessage();
@@ -164,6 +199,28 @@ let userController  = (function(UIctrl) {
     };
 
     let logoutRequest = function() {
+        let token, url, method, header;
+        token = getTokenCookie();
+        url = 'https://ancient-caverns-16784.herokuapp.com/auth/logout';
+        method: 'GET';
+        header = new Headers();
+
+        $(function() {
+            $.ajax({
+                url: url,
+                type: method,
+                headers:{'x-auth-token': token},
+                success: function(response) {
+                    console.log(`Logout success.`);
+                    // setTokenCookie('');
+                    deleteTokenCookie();
+                    UIctrl.toggleHeaderButtons();
+                },
+                error: function(response) {
+                    console.log(`Logout error: ${response}`)
+                },
+            })
+        });
     };
 
     let registerRequest = function() {        
@@ -196,13 +253,16 @@ let userController  = (function(UIctrl) {
                     message = `Welcome ${user}.` ;
                     UIctrl.showRegisterMessage(message, 'status');
 
-                    //hideModa/
+                    //hideModal
+                    setTimeout(function() {
+                        UIctrl.hideModal()
+                    }, 3000);
 
-                    //hideHeaderButtons
-
-                    //show HeaderButtons
+                    //toggle HeaderButtons
+                    UIctrl.toggleHeaderButtons();                    
 
                     //setCookie with token
+                    setTokenCookie(response.accessToken);
                 },
                 error: function(response) {
                     UIctrl.hideModalMessage();
@@ -287,9 +347,11 @@ let userController  = (function(UIctrl) {
             } else return true;
         },
 
-        loginRequest,
-        registerRequest,
 
+        loginRequest,
+        logoutRequest,
+        registerRequest,
+        getTokenCookie,
 
     };
 
@@ -306,12 +368,14 @@ let deleteMovieController  = (function() {
 let editMovieController  = (function() {
 })();
 
+
+
 ////////////////// controller
 
 let controller = (function(UIctrl, userCtrl) {
     
     let setupEventListeners = function() {
-        let DOM = UIctrl.getDOMStrings();
+        const DOM = UIctrl.getDOMStrings();
         
         DOM.headerLoginBtn.onclick = function() {
             DOM.modal.classList.remove('hidden');
@@ -331,6 +395,10 @@ let controller = (function(UIctrl, userCtrl) {
             UIctrl.setModalState(true);
         };
         
+        DOM.headerLogoutBtn.onclick = function() {
+            userCtrl.logoutRequest();
+        };
+
         DOM.modal.onclick = function(event) {                      
             if (event.target.className === 'modal') {
                 UIctrl.hideModal(); 
@@ -382,12 +450,19 @@ let controller = (function(UIctrl, userCtrl) {
     };
 
 
-    
     return {
+
         init: function() {
             console.log('Application has started!');
-
+            
             setupEventListeners();
+
+            if (userCtrl.getTokenCookie()) {
+                console.log('Inititial accessToken: true');
+                UIctrl.toggleHeaderButtons();
+            } else {
+                console.log('Initial accessToken: false');
+            }
         },
     }
 
