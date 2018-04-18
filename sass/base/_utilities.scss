@@ -4,12 +4,11 @@
 }
 
 .error {
-    background-color: rgb(231, 160, 133);
-    position: absolute;
-    z-index: 100;
-    border-radius: 10px;
-    padding: .7rem 1rem;
-    margin: 0 5rem;
-    width: 70%;
-    text-align: center;
+    background-color: $color-msg-error;
+    @include accountMessage;
+}
+
+.status {
+    background-color: $color-msg-status;
+    @include accountMessage;
 }

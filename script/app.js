@@ -20,9 +20,8 @@ let UIController  = (function() {
         modal: document.querySelector('.modal'),
         modalLogin: document.querySelector('.modal__login'),
         modalRegister: document.querySelector('.modal__register'),
-        modalLoginError: document.querySelector('.modal__login-error'),
-        modalRegisterError: document.querySelector('.modal__register-error'),
-
+        modalLoginMsg: document.querySelector('.modal__login-msg'),
+        modalRegisterMsg: document.querySelector('.modal__register-msg'),
     };
 
     let data = {
@@ -48,7 +47,7 @@ let UIController  = (function() {
         hideModal: function() {
             this.clearAccInputFields();
             this.setModalState(false);
-            this.hideAccErrorMessage();
+            this.hideModalMessage();
             
             DOMStrings.modal.classList.add('hidden');
             DOMStrings.modalLogin.classList.add('hidden');
@@ -57,7 +56,7 @@ let UIController  = (function() {
         
         toggleModal: function() {
             this.clearAccInputFields();
-            this.hideAccErrorMessage();
+            this.hideModalMessage();
 
             DOMStrings.modalLogin.classList.toggle('hidden');
             DOMStrings.modalRegister.classList.toggle('hidden');
@@ -68,19 +67,40 @@ let UIController  = (function() {
             DOMStrings.modalRegister.reset();
         },
 
-        showRegisterError: function(message) {
-            DOMStrings.modalRegisterError.innerHTML = message;
-            DOMStrings.modalRegisterError.classList.remove('hidden');
-        },
+        showRegisterMessage: function(message, type) {
+            DOMStrings.modalRegisterMsg.innerHTML = message;
 
-        showLoginError: function(message) {
-            DOMStrings.modalLoginError.innerHTML = message;
-            DOMStrings.modalLoginError.classList.remove('hidden');
+            if(type === 'error') {
+                // console.log('Register IF');
+                DOMStrings.modalRegisterMsg.classList.add('error');
+            } else if (type === 'status') {
+                // console.log('Register ELSE');
+                DOMStrings.modalRegisterMsg.classList.add('status');
+            }
+            
+            DOMStrings.modalRegisterMsg.classList.remove('hidden');
         },
+        
+        showLoginMessage: function(message, type) {
+            DOMStrings.modalLoginMsg.innerHTML = message;
+            
+            if(type === 'error') {
+                // console.log('Login IF');
+                DOMStrings.modalLoginMsg.classList.add('error');
+            } else if (type === 'status') {
+                // console.log('Login ELSE');
+                DOMStrings.modalLoginMsg.classList.add('status');
+            }
+            
+            DOMStrings.modalLoginMsg.classList.remove('hidden');
+        },
+        
+        hideModalMessage: function() {
+            DOMStrings.modalLoginMsg.classList.remove('error', 'status');
+            DOMStrings.modalLoginMsg.classList.add('hidden');
 
-        hideAccErrorMessage: function() {
-            DOMStrings.modalRegisterError.classList.add('hidden');
-            DOMStrings.modalLoginError.classList.add('hidden');
+            DOMStrings.modalRegisterMsg.classList.remove('error', 'status');
+            DOMStrings.modalRegisterMsg.classList.add('hidden');
         },
 
 
@@ -96,9 +116,7 @@ let userController  = (function(UIctrl) {
     let DOM = UIctrl.getDOMStrings();
 
     let loginRequest = function() {
-        UIctrl.hideAccErrorMessage();
-
-        let user, pass, url, data, method;
+        let user, pass, url, data, method, message;
         user = DOM.loginUser.value;
         pass = DOM.loginPass.value;
         url = 'https://ancient-caverns-16784.herokuapp.com/auth/login';
@@ -109,6 +127,9 @@ let userController  = (function(UIctrl) {
             password: pass,
         };
 
+        message = `${user}, please wait!`
+        UIctrl.showLoginMessage(message, 'status');
+
         ////////////// - AJAX START
         $(function() {
             $.ajax({
@@ -116,12 +137,26 @@ let userController  = (function(UIctrl) {
                 type: method,
                 data: data,
                 success: function(response) {
-                    // console.log(response);
+                    UIctrl.hideModalMessage();
+                    
+                    // setTimeout for welcome message
+                    message = `Welcome back ${user}.` ;
+                    UIctrl.showLoginMessage(message, 'status');
+
+                    //hideModa
+
+                    //hideHeaderButtons
+
+                    //show HeaderButtons
+
+                    //setCookie with token             
 
                 },
                 error: function(response) {
-                    let message = response.responseJSON.message;
-                    UIctrl.showLoginError(message);
+                    UIctrl.hideModalMessage();
+                    
+                    message = response.responseJSON.message;
+                    UIctrl.showLoginMessage(message, 'error');
                 },
             })
         });
@@ -131,10 +166,8 @@ let userController  = (function(UIctrl) {
     let logoutRequest = function() {
     };
 
-    let registerRequest = function() {
-        UIctrl.hideAccErrorMessage();
-        
-        let user, pass, url, data, method;
+    let registerRequest = function() {        
+        let user, pass, url, data, method, message;
         user = DOM.registerUser.value;
         pass = DOM.registerPass1.value;
         method = 'POST';
@@ -145,6 +178,9 @@ let userController  = (function(UIctrl) {
             password: pass,
         };
                 
+        message = `${user}, please wait!`
+        UIctrl.showRegisterMessage(message, 'status');
+
         ////////////// - AJAX START
         $(function() {
             $.ajax({
@@ -154,10 +190,25 @@ let userController  = (function(UIctrl) {
                 contentType: 'application/x-www-form-urlencoded',
                 success: function(response) {
                     console.log(response);
+                    UIctrl.hideModalMessage();
+
+                    // setTimeout for welcome message
+                    message = `Welcome ${user}.` ;
+                    UIctrl.showRegisterMessage(message, 'status');
+
+                    //hideModa/
+
+                    //hideHeaderButtons
+
+                    //show HeaderButtons
+
+                    //setCookie with token
                 },
                 error: function(response) {
-                    let message = response.responseJSON.message;
-                    UIctrl.showRegisterError(message);
+                    UIctrl.hideModalMessage();
+                    
+                    message = response.responseJSON.message;
+                    UIctrl.showRegisterMessage(message, 'error');
                 },
             })
         });
@@ -207,35 +258,31 @@ let userController  = (function(UIctrl) {
 
     return {
 
-        loginRequest : function() {
-            console.log('Loging in');
-        },
-
         validateLoginFields: function() {
-            let user, pass;
+            let user, pass, message;
             user = DOM.loginUser.value;
             pass = DOM.loginPass.value;
-    
+            
             if (user === '' || pass === '') {
-                let message = 'Fields cannot be empty!';
-                UIctrl.showLoginError(message);
+                message = 'Fields cannot be empty!';
+                UIctrl.showLoginMessage(message, 'error');
                 return false;
             } else return true;
         },
 
         validateRegisterFields: function() {
-            let user, pass1, pass2;
+            let user, pass1, pass2, message;
             user = DOM.registerUser.value;
             pass1 = DOM.registerPass1.value;
             pass2 = DOM.registerPass2.value;
     
             if (user === '' || pass1 === '' || pass2 === '') {
-                let message  = 'Fields cannot be empty!';
-                UIctrl.showRegisterError(message);
+                message  = 'Fields cannot be empty!';
+                UIctrl.showRegisterMessage(message, 'error');
                 return false;
             } else if (pass1 !== pass2) {
-                let message  = 'Please check your password!';
-                UIctrl.showRegisterError(message);
+                message  = 'Please check your password!';
+                UIctrl.showRegisterMessage(message, 'error');
                 return false;
             } else return true;
         },
@@ -307,11 +354,9 @@ let controller = (function(UIctrl, userCtrl) {
             event.preventDefault();
 
             if (userCtrl.validateLoginFields()) {
-                console.log('Login fields are valid');
+                // console.log('Login fields are valid');
                 userCtrl.loginRequest();
-            } else {
-                console.log('Login fields are invalid');
-            }
+            };
         };
 
         DOM.loginRegisterBtn.onclick = function() {
@@ -330,12 +375,9 @@ let controller = (function(UIctrl, userCtrl) {
             event.preventDefault();
 
             if (userCtrl.validateRegisterFields()) {
-                console.log('Register fields are valid');
-                
+                // console.log('Register fields are valid');
                 userCtrl.registerRequest();
-            } else {
-                console.log('Register fields are invalid');
-            }
+            }; 
         };
     };
 
