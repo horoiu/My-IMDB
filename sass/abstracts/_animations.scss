@@ -1,0 +1,31 @@
+
+.zoom-in {
+    -webkit-animation-name: zoomIn 1s;
+    animation-name: zoomIn 1s;
+}
+
+@-webkit-keyframes zoomIn {
+    from {-webkit-transform: scale(0)}; 
+    to {-webkit-transform: scale(1)};
+}
+    
+@keyframes zoomIn {
+    from {transform: scale(0)};
+    to {transform: scale(1)};
+}
+
+
+.zoom-out {
+    -webkit-animation-name: zoomOut 1s;
+    animation-name: zoomOut 1s;
+}
+
+@-webkit-keyframes zoomOut {
+    from {-webkit-transform: scale(1)}; 
+    to {-webkit-transform: scale(0)};
+}
+    
+@keyframes zoomOut {
+    from {transform: scale(1)};
+    to {transform: scale(0)};
+}

@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
+    
 
     <title>My IMBD</title>
 </head>
@@ -49,7 +49,7 @@
 
     <section class="modal hidden">
         
-        <form class="modal__login hidden">
+        <form class="modal__login hidden animations">
 
             <h1 class="modal__login-heading">Log in</h1>
             <div class="modal__login-inputs">
@@ -87,33 +87,65 @@
 
     </section>
 
-    <section class="section-search">
-        <div>Search-Bar</div>
-        <div>Button</div>
-        <div>Movie type selector</div>
+    
+
+    <section class="section__content">
+
+        <section class="section__content-search">
+            <input class="section__content-search--bar" type="search" placeholder="Search for a movie ..."></input>
+            <button class="section__content-search--btn">Button</button>
+            <select class="section__content-search--selector">Movie type selector
+                <option selected>All movies</option>
+                <option>Action</option>
+                <option>Adventure</option>
+                <option>Animation</option>
+                <option>Biography</option>
+                <option>Comedy</option>
+                <option>Crime</option>
+                <option>Drama</option>
+                <option>Fantasy</option>
+                <option>Sci-Fi</option>
+                <!-- <option></option> -->
+                <!-- <option></option> -->
+            </select>
+        </section>
+
+        <section class="section__content-movies">
+            <div class="movie movie-1">Movie no.1</div>
+            <div class="movie movie-2">Movie no.2</div>
+            <div class="movie movie-3">Movie no.3</div>
+            <div class="movie movie-4">Movie no.4</div>
+            <div class="movie movie-5">Movie no.5</div>
+            <div class="movie movie-6">Movie no.6</div>
+            <div class="movie movie-7">Movie no.7</div>
+            <div class="movie movie-8">Movie no.8</div>
+            <div class="movie movie-9">Movie no.9</div>
+            <div class="movie movie-10">Movie no.10</div>
+        </section>
+
+        <section class="section__content-pagination">
+            <div>Pagination</div>
+        </section>
+
     </section>
 
-    <section class="section-content">
-        <div class="movie movie-1">Movie no.1</div>
-        <div class="movie movie-2">Movie no.2</div>
-        <div class="movie movie-3">Movie no.3</div>
-        <div class="movie movie-4">Movie no.4</div>
-        <div class="movie movie-5">Movie no.5</div>
-        <div class="movie movie-6">Movie no.6</div>
-        <div class="movie movie-7">Movie no.7</div>
-        <div class="movie movie-8">Movie no.8</div>
-        <div class="movie movie-9">Movie no.9</div>
-        <div class="movie movie-10">Movie no.10</div>
-    </section>
-
-    <section class="section-pagination">
-        <div>Pagination</div>
-    </section>
+    
 
     <footer class="footer">
         <div>FOOTER</div>
     </footer>
 
-    <script src="script/app.js"></script>
+
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script> -->
+    <script src="script/jquery-3.3.1.js" defer></script>
+
+
+
+    <script src="script/UIController.js" defer></script>
+    <script src="script/userController.js" defer></script>
+    
+    <script src="script/getMovieController.js" defer></script>
+    <script src="script/app.js" defer></script>
 </body>
 </html>
