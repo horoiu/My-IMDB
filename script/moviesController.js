@@ -1,6 +1,6 @@
-//////////////// getMovieController 
+//////////////// getMoviesController 
 
-let getMovieController  = (function(UIctrl) {
+let moviesController  = (function(UIctrl) {
     const DOM = UIctrl.getDOMStrings();
     let address, data, method, message, token;
     address = 'https://ancient-caverns-16784.herokuapp.com/movies';
@@ -10,7 +10,7 @@ let getMovieController  = (function(UIctrl) {
         if (genre === '' || genre === undefined) {
             url = address;
         } else {
-            url = adress + genre;
+            url = address + "?Genre=" + genre;
         }
         ////////////// - AJAX START
         $(function() {
@@ -20,7 +20,12 @@ let getMovieController  = (function(UIctrl) {
                 // data: data,
                 success: function(response) {
                     console.log('Movies GET success: ', response);
-                    return response;
+
+                    // showMovies
+                    UIctrl.showMovies(response.results);
+
+                    // showPagination
+                    
                 },
                 error: function(response) {
                     console.log('Movies GET error: ', response);
@@ -31,8 +36,14 @@ let getMovieController  = (function(UIctrl) {
         //////////// - END AJAX
     };
 
+    let renderMovies = function(movies) {
+        console.log(movies.results);
+    };
+
     return {
+
         getMovies,
+
     }
     
 })(UIController);

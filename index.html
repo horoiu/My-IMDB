@@ -89,12 +89,12 @@
 
     
 
-    <section class="section__content">
+    <section class="content">
 
-        <section class="section__content-search">
-            <input class="section__content-search--bar" type="search" placeholder="Search for a movie ..."></input>
-            <button class="section__content-search--btn">Button</button>
-            <select class="section__content-search--selector">Movie type selector
+        <section class="content__search">
+            <input class="content__search-bar" type="search" placeholder="Search for a movie ..."></input>
+            <button class="content__search-btn">Button</button>
+            <select class="content__search-selector">Movie type selector
                 <option selected>All movies</option>
                 <option>Action</option>
                 <option>Adventure</option>
@@ -110,20 +110,38 @@
             </select>
         </section>
 
-        <section class="section__content-movies">
-            <div class="movie movie-1">Movie no.1</div>
-            <div class="movie movie-2">Movie no.2</div>
-            <div class="movie movie-3">Movie no.3</div>
-            <div class="movie movie-4">Movie no.4</div>
-            <div class="movie movie-5">Movie no.5</div>
-            <div class="movie movie-6">Movie no.6</div>
-            <div class="movie movie-7">Movie no.7</div>
-            <div class="movie movie-8">Movie no.8</div>
-            <div class="movie movie-9">Movie no.9</div>
-            <div class="movie movie-10">Movie no.10</div>
+        <section class="content__movies">
+
+            <!-- <div class="content__movies-movie movie-1">                  
+                <a class="content__movies-movie--link" href="#">
+                    <div class="content__movies-movie--rating">
+                        
+                        <p class="star">&starf;</p>
+                        <div>
+                            <p class="ratings">
+                                <span>6.7</span>
+                                <span>/ 10</span>
+                            </p>
+                            <p class="voters">123456</p>
+                        </div>
+                        
+                    </div>
+                    
+                    <h1 class="content__movies-movie--title">
+                        Movie title is always long &nbsp;
+                    </h1>
+                    
+                    <div class="content__movies-movie--details">
+                        <span>2012 &nbsp;</span>
+                        <span>&nbsp; Drama, Crime, Adventure, Action &nbsp;</span>
+                        <span>&nbsp; 151 min</span>
+                    </div>
+                </a>       
+            </div> -->
+
         </section>
 
-        <section class="section__content-pagination">
+        <section class="content__pagination">
             <div>Pagination</div>
         </section>
 
@@ -144,8 +162,8 @@
 
     <script src="script/UIController.js" defer></script>
     <script src="script/userController.js" defer></script>
-    
-    <script src="script/getMovieController.js" defer></script>
+    <script src="script/moviesController.js" defer></script>
+
     <script src="script/app.js" defer></script>
 </body>
 </html>

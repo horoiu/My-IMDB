@@ -19,13 +19,17 @@ let editMovieController  = (function() {
 })();
 
 
-// //////////////// getMovieController 
+// //////////////// getMoviesController 
+// here
+
+
+// //////////////// showMoviesController 
 // here
 
 
 ////////////////// controller
 
-let controller = (function(UIctrl, userCtrl, movieCtrl) {
+let controller = (function(UIctrl, userCtrl, moviesCtrl) {
     
     let setupEventListeners = function() {
         const DOM = UIctrl.getDOMStrings();
@@ -107,20 +111,20 @@ let controller = (function(UIctrl, userCtrl, movieCtrl) {
 
         init: function() {
             console.log('Application has started!');
-            setupEventListeners();
+            moviesCtrl.getMovies();
             
             if (userCtrl.getTokenCookie()) {
-                console.log('Inititial accessToken: true');
+                console.log('Initial accessToken: true');
                 UIctrl.toggleHeaderButtons();
             } else {
                 console.log('Initial accessToken: false');
             }
             
-            movieCtrl.getMovies();
+            setupEventListeners();
         },
     }
 
-})(UIController, userController, getMovieController);
+})(UIController, userController, moviesController);
 
 
 controller.init();
