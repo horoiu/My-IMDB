@@ -34,6 +34,8 @@ let UIController  = (function() {
         modal: false,
         moviesResponse: {},
         movieResponse: {},
+        movieID: '',
+
 
     };
 
@@ -87,17 +89,55 @@ let UIController  = (function() {
         for (let i = 0; i < movies.length; i++) {
             // console.log(movies[i]);
             movies[i].addEventListener('click', function() {
-                clickEvent(movies[i].id);
+                // clickEvent(movies[i].id);
+                movieController.getMovie(movies[i].id);
             });
         };
     };
-
-    let clickEvent = function(id) {
-        // let movieID = ev.target.parentElement.id;
-        // console.log('movie clicked: ', movieID);
-        console.log('movie clicked: ', id);
-    };
     
+    let showMovie = function(movie) {
+        console.log('UIController - showMovie: ', movie);
+        let html, container, i  ;
+        html = '';  
+        // DOMStrings.moviesContainer.innerHTML = html;  
+           
+
+        // for (i = 0; i <= movies.length-1; i++ ) {             
+        //     let movie = `<div class="content__movies-movie movie-${i+1}" id="${movies[i]._id}"> 
+        //                     <img class="content__movies-movie--img" src="${movies[i].Poster}"       
+        //                     <a class="content__movies-movie--link">
+        //                         <div class="content__movies-movie--rating">
+                                    
+        //                             <p class="star">&starf;</p>
+        //                             <div>
+        //                                 <p class="ratings">
+        //                                     <span>${movies[i].imdbRating}</span>
+        //                                     <span>/ 10</span>
+        //                                 </p>
+        //                                 <p class="voters">${movies[i].imdbVotes}</p>
+        //                             </div>
+                                    
+        //                         </div>
+                                
+        //                         <h1 class="content__movies-movie--title">
+        //                         ${movies[i].Title} &nbsp;
+        //                         </h1>
+                                
+        //                         <div class="content__movies-movie--details">
+        //                             <p>
+        //                                 <span>${movies[i].Year} &nbsp;</span>
+        //                                 <span>&nbsp; ${movies[i].Runtime}</span>
+        //                             </p>
+        //                             <p>&nbsp; ${movies[i].Genre} &nbsp;</p>
+        //                         </div>
+        //                     </a>       
+        //                 </div>`
+
+        //     html += movie;  
+        // };
+                    
+        // DOMStrings.moviesContainer.innerHTML = html;  
+    };
 
 
     return {
@@ -179,16 +219,15 @@ let UIController  = (function() {
             DOMStrings.headerLogoutBtn.classList.toggle('hidden');
         },
 
-
         setMoviesResponse: function(response) {
             data.moviesResponse = response;
         },
 
-        clickEvent,
-
         setMovieClickEvent,
 
         showMovies,
+
+        showMovie,
 
         
 
