@@ -23,14 +23,22 @@ let UIController  = (function() {
         modalLoginMsg: document.querySelector('.modal__login-msg'),
         modalRegisterMsg: document.querySelector('.modal__register-msg'),
         moviesContainer: document.querySelector('.content__movies'),
+        paginationContainer: document.querySelector('.content__pagination'),
+        paginPrev: document.querySelector('.content__pagination-btns--prev'),
+        paginCurr: document.querySelector('.content__pagination-btns--curr'),
+        paginNext: document.querySelector('.content__pagination-btns--next'),
 
     };
 
     let data = {
         modal: false,
+        moviesResponse: {},
+
     };
 
     return {
+
+        // showPagination,
 
         getDOMStrings: function() {
             return DOMStrings;
@@ -150,6 +158,8 @@ let UIController  = (function() {
                         
             DOMStrings.moviesContainer.innerHTML = html;
 
+    
+
 
             // let Movie = function(defaultData) {
             //     defaultData ? defaultData : {};
@@ -169,7 +179,13 @@ let UIController  = (function() {
 
             
         },
+
+        setMoviesResponse: function(response) {
+            data.moviesResponse = response;
+        },
+
     }
 })();
+// })(moviesController);
 
 

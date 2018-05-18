@@ -6,11 +6,31 @@ let moviesController  = (function(UIctrl) {
     address = 'https://ancient-caverns-16784.herokuapp.com/movies';
     method = 'GET';
     
-    let getMovies = function(genre) {
-        if (genre === '' || genre === undefined) {
+    let setPagination = function(data) {
+        console.log('setPagination:', data);
+        const prevPage = data.links.prev;
+        const nextPage = data.links.next;
+
+        DOM.paginPrev.onclick = function() {
+            if (prevPage) {
+                getMovies(prevPage);
+            } else return;
+        };
+
+        DOM.paginNext.onclick = function() {
+            if (nextPage) {
+                getMovies(nextPage);
+            } else return;
+        };
+
+        DOM.paginCurr.textContent = `Page ${data.currentPage} of ${data.numberOfPages}`;
+    }
+
+    let getMovies = function(link) {
+        if (link === '' || link === undefined) {
             url = address;
         } else {
-            url = address + "?Genre=" + genre;
+            url = link;
         }
         ////////////// - AJAX START
         $(function() {
@@ -19,13 +39,18 @@ let moviesController  = (function(UIctrl) {
                 type: method,
                 // data: data,
                 success: function(response) {
-                    console.log('Movies GET success: ', response);
+                    // console.log('Movies GET success: ', response);
 
                     // showMovies
                     UIctrl.showMovies(response.results);
 
+                    //
+                    UIctrl.setMoviesResponse(response);
+
                     // showPagination
-                    
+                    setPagination(response.pagination);
+
+                    // console.log('getMovies is done');
                 },
                 error: function(response) {
                     console.log('Movies GET error: ', response);

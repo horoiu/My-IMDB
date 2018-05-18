@@ -17,13 +17,10 @@ body {
 }
 
 .container {
-    display: grid;
     height: 100%;
     width: 100%;
-    // grid-template-rows: minmax(10rem, 10vh) calc(100vh - 18vh) minmax(8rem, 8vh);
+    
+    display: grid;
     grid-template-rows: minmax(10rem, 10vh) minmax(calc(100vh - 18vh), 1fr) minmax(8rem, 8vh);
     grid-template-columns: 12vw 1fr 12vw;
-
-    // border: 3px solid yellow;
-    // box-sizing: border-box;
 }

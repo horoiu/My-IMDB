@@ -1,4 +1,5 @@
-////////////////// userController
+////////////////// userController 
+////////////////// only for LogIn / Register / LogOut
 
 let userController  = (function(UIctrl) {
     const DOM = UIctrl.getDOMStrings();

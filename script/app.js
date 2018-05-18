@@ -8,7 +8,7 @@
 
 
 let addMovieController  = (function() {
-})(UIController);
+})();
 
 
 let deleteMovieController  = (function() {
@@ -33,6 +33,7 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl) {
     
     let setupEventListeners = function() {
         const DOM = UIctrl.getDOMStrings();
+        // console.log('DOM: ', DOM)
         
         DOM.headerLoginBtn.onclick = function() {
             DOM.modal.classList.remove('hidden');
@@ -104,8 +105,8 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl) {
                 userCtrl.registerRequest();
             }; 
         };
-    };
 
+    };
 
     return {
 
@@ -121,7 +122,10 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl) {
             }
             
             setupEventListeners();
+            console.log('initFunction done');
+            // console.log(movieData);
         },
+
     }
 
 })(UIController, userController, moviesController);
