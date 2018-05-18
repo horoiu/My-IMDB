@@ -33,12 +33,74 @@ let UIController  = (function() {
     let data = {
         modal: false,
         moviesResponse: {},
+        movieResponse: {},
 
     };
 
-    return {
+    let showMovies = function(movies) {
+        // console.log('showMovies: ', movies[0]);
+        let html, container, i  ;
+        html = '';     
 
-        // showPagination,
+        for (i = 0; i <= movies.length-1; i++ ) {             
+            let movie = `<div class="content__movies-movie movie-${i+1}" id="${movies[i]._id}"> 
+                            <img class="content__movies-movie--img" src="${movies[i].Poster}"       
+                            <a class="content__movies-movie--link">
+                                <div class="content__movies-movie--rating">
+                                    
+                                    <p class="star">&starf;</p>
+                                    <div>
+                                        <p class="ratings">
+                                            <span>${movies[i].imdbRating}</span>
+                                            <span>/ 10</span>
+                                        </p>
+                                        <p class="voters">${movies[i].imdbVotes}</p>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <h1 class="content__movies-movie--title">
+                                ${movies[i].Title} &nbsp;
+                                </h1>
+                                
+                                <div class="content__movies-movie--details">
+                                    <p>
+                                        <span>${movies[i].Year} &nbsp;</span>
+                                        <span>&nbsp; ${movies[i].Runtime}</span>
+                                    </p>
+                                    <p>&nbsp; ${movies[i].Genre} &nbsp;</p>
+                                </div>
+                            </a>       
+                        </div>`
+
+            html += movie;  
+        };
+                    
+        DOMStrings.moviesContainer.innerHTML = html;  
+    };
+
+    let setMovieClickEvent = function(response) {
+        // console.log('movieClick response: ', response);
+
+        let movies = DOMStrings.moviesContainer.querySelectorAll(".content__movies-movie");
+
+        for (let i = 0; i < movies.length; i++) {
+            // console.log(movies[i]);
+            movies[i].addEventListener('click', function() {
+                clickEvent(movies[i].id);
+            });
+        };
+    };
+
+    let clickEvent = function(id) {
+        // let movieID = ev.target.parentElement.id;
+        // console.log('movie clicked: ', movieID);
+        console.log('movie clicked: ', id);
+    };
+    
+
+
+    return {
 
         getDOMStrings: function() {
             return DOMStrings;
@@ -117,75 +179,22 @@ let UIController  = (function() {
             DOMStrings.headerLogoutBtn.classList.toggle('hidden');
         },
 
-        showMovies: function(movies) {
-            // console.log('showMovies: ', movies[0]);
-            let html, container, i  ;
-            html = '';     
-
-            for (i = 0; i <= movies.length-1; i++ ) {             
-                let movie = `<div class="content__movies-movie movie-${i+1} id="${movies[i]._id}"> 
-                                <img class="content__movies-movie--img" src="${movies[i].Poster}"       
-                                <a class="content__movies-movie--link" href="#">
-                                    <div class="content__movies-movie--rating">
-                                        
-                                        <p class="star">&starf;</p>
-                                        <div>
-                                            <p class="ratings">
-                                                <span>${movies[i].imdbRating}</span>
-                                                <span>/ 10</span>
-                                            </p>
-                                            <p class="voters">${movies[i].imdbVotes}</p>
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <h1 class="content__movies-movie--title">
-                                    ${movies[i].Title} &nbsp;
-                                    </h1>
-                                    
-                                    <div class="content__movies-movie--details">
-                                        <p>
-                                            <span>${movies[i].Year} &nbsp;</span>
-                                            <span>&nbsp; ${movies[i].Runtime}</span>
-                                        </p>
-                                        <p>&nbsp; ${movies[i].Genre} &nbsp;</p>
-                                    </div>
-                                </a>       
-                            </div>`
-
-                html += movie;  
-            };
-                        
-            DOMStrings.moviesContainer.innerHTML = html;
-
-    
-
-
-            // let Movie = function(defaultData) {
-            //     defaultData ? defaultData : {};
-            //     this.Country = defaultData.Country;
-            //     this.Genre = defaultData.Genre;
-            //     this.Language = defaultData.Language;
-            //     this.Poster = defaultData.Poster;
-            //     this.Runtime = defaultData.Runtime;
-            //     this.Title = defaultData.Title;
-            //     this.Type = defaultData.Type;
-            //     this.Year = defaultData.Year;
-            //     this.imdbID = defaultData.imdbID;
-            //     this.imdbRating = defaultData.imdbRating;
-            //     this.imdbVotes = defaultData.imdbVotes;
-            //     this.id = defaultData._id;
-            // };
-
-            
-        },
 
         setMoviesResponse: function(response) {
             data.moviesResponse = response;
         },
 
+        clickEvent,
+
+        setMovieClickEvent,
+
+        showMovies,
+
+        
+
+        
+
     }
 })();
-// })(moviesController);
 
 

@@ -7,7 +7,7 @@ let moviesController  = (function(UIctrl) {
     method = 'GET';
     
     let setPagination = function(data) {
-        console.log('setPagination:', data);
+        // console.log('setPagination:', data);
         const prevPage = data.links.prev;
         const nextPage = data.links.next;
 
@@ -40,15 +40,20 @@ let moviesController  = (function(UIctrl) {
                 // data: data,
                 success: function(response) {
                     // console.log('Movies GET success: ', response);
+                    
+                    // save response in UIController variable
+                    UIctrl.setMoviesResponse(response);
 
                     // showMovies
                     UIctrl.showMovies(response.results);
 
-                    //
-                    UIctrl.setMoviesResponse(response);
-
+                    
                     // showPagination
                     setPagination(response.pagination);
+                    
+                    //set eventListener on each movie
+                    UIctrl.setMovieClickEvent(response.results);
+
 
                     // console.log('getMovies is done');
                 },
@@ -59,10 +64,6 @@ let moviesController  = (function(UIctrl) {
             })
         }); 
         //////////// - END AJAX
-    };
-
-    let renderMovies = function(movies) {
-        console.log(movies.results);
     };
 
     return {

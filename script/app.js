@@ -23,13 +23,13 @@ let editMovieController  = (function() {
 // here
 
 
-// //////////////// showMoviesController 
+// //////////////// movieController 
 // here
 
 
 ////////////////// controller
 
-let controller = (function(UIctrl, userCtrl, moviesCtrl) {
+let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
     
     let setupEventListeners = function() {
         const DOM = UIctrl.getDOMStrings();
@@ -122,13 +122,15 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl) {
             }
             
             setupEventListeners();
-            console.log('initFunction done');
+
+            // console.log('initFunction done');
             // console.log(movieData);
+
         },
 
     }
 
-})(UIController, userController, moviesController);
+})(UIController, userController, moviesController, movieController);
 
 
 controller.init();
