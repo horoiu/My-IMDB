@@ -54,7 +54,7 @@ let controller = (function() {
         };
         
         DOM.headerLogoutBtn.onclick = function() {
-            userCtrl.logoutRequest();
+            userController.logoutRequest();
         };
 
         DOM.modal.onclick = function(event) {                      
@@ -79,9 +79,9 @@ let controller = (function() {
         DOM.loginLoginBtn.onclick = function(event) {
             event.preventDefault();
 
-            if (userCtrl.validateLoginFields()) {
+            if (userController.validateLoginFields()) {
                 // console.log('Login fields are valid');
-                userCtrl.loginRequest();
+                userController.loginRequest();
             };
         };
 
@@ -100,9 +100,9 @@ let controller = (function() {
         DOM.registerRegisterBtn.onclick = function(event) {
             event.preventDefault();
 
-            if (userCtrl.validateRegisterFields()) {
+            if (userController.validateRegisterFields()) {
                 // console.log('Register fields are valid');
-                userCtrl.registerRequest();
+                userController.registerRequest();
             }; 
         };
 
