@@ -1,7 +1,7 @@
 //////////////// getMoviesController 
 
-let moviesController  = (function(UIctrl) {
-    const DOM = UIctrl.getDOMStrings();
+let moviesController  = (function() {
+    const DOM = UIController.getDOMStrings();
     let address, data, method, message, token;
     address = 'https://ancient-caverns-16784.herokuapp.com/movies';
     method = 'GET';
@@ -42,17 +42,28 @@ let moviesController  = (function(UIctrl) {
                     // console.log('Movies GET success: ', response);
                     
                     // save response in UIController variable
-                    UIctrl.setMoviesResponse(response);
+                    UIController.setMoviesResponse(response);
 
                     // showMovies
-                    UIctrl.showMovies(response.results);
+                    UIController.showMovies(response.results);
 
                     
                     // showPagination
                     setPagination(response.pagination);
                     
                     //set eventListener on each movie
-                    UIctrl.setMovieClickEvent(response.results);
+                    UIController.setMovieClickEvent(response.results);
+
+
+
+                    // // history manipulation for browser navigation back/forward buttons
+                    
+                    // let location = `page${response.pagination.currentPage}of${response.pagination.numberOfPages}`;
+                    // // console.log(location);
+                    // history.pushState({},'', location);
+
+
+
 
 
                     // console.log('getMovies is done');
@@ -72,4 +83,4 @@ let moviesController  = (function(UIctrl) {
 
     }
     
-})(UIController);
+})();

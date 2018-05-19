@@ -29,10 +29,10 @@ let editMovieController  = (function() {
 
 ////////////////// controller
 
-let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
+let controller = (function() {
     
     let setupEventListeners = function() {
-        const DOM = UIctrl.getDOMStrings();
+        const DOM = UIController.getDOMStrings();
         // console.log('DOM: ', DOM)
         
         DOM.headerLoginBtn.onclick = function() {
@@ -41,7 +41,7 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
             DOM.loginUser.focus();
             DOM.modalRegister.classList.add('hidden');
             
-            UIctrl.setModalState(true);
+            UIController.setModalState(true);
         };        
         
         DOM.headerRegisterBtn.onclick = function() {
@@ -50,7 +50,7 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
             DOM.registerUser.focus();
             DOM.modalLogin.classList.add('hidden');
 
-            UIctrl.setModalState(true);
+            UIController.setModalState(true);
         };
         
         DOM.headerLogoutBtn.onclick = function() {
@@ -59,21 +59,21 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
 
         DOM.modal.onclick = function(event) {                      
             if (event.target.className === 'modal') {
-                UIctrl.hideModal(); 
+                UIController.hideModal(); 
             };
         };
 
         //hide modal and clear fields if ESCape key is pressed 
         window.onkeyup = function(event) {
-            let modal = UIctrl.getModalState();
+            let modal = UIController.getModalState();
 
             if (event.keyCode === 27 && modal) {
-                UIctrl.hideModal();
+                UIController.hideModal();
             };
         };
         
         DOM.loginCancelBtn.onclick = function() {
-            UIctrl.hideModal();
+            UIController.hideModal();
         };
 
         DOM.loginLoginBtn.onclick = function(event) {
@@ -86,15 +86,15 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
         };
 
         DOM.loginRegisterBtn.onclick = function() {
-            UIctrl.toggleModal();
+            UIController.toggleModal();
         };
 
         DOM.registerCancelBtn.onclick = function() {
-            UIctrl.hideModal();
+            UIController.hideModal();
         };
 
         DOM.registerLoginBtn.onclick = function() {
-            UIctrl.toggleModal();
+            UIController.toggleModal();
         };
 
         DOM.registerRegisterBtn.onclick = function(event) {
@@ -112,11 +112,11 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
 
         init: function() {
             console.log('Application has started!');
-            moviesCtrl.getMovies();
+            moviesController.getMovies();
             
-            if (userCtrl.getTokenCookie()) {
+            if (userController.getTokenCookie()) {
                 console.log('Initial accessToken: true');
-                UIctrl.toggleHeaderButtons();
+                UIController.toggleHeaderButtons();
             } else {
                 console.log('Initial accessToken: false');
             }
@@ -130,7 +130,7 @@ let controller = (function(UIctrl, userCtrl, moviesCtrl, movieCtrl) {
 
     }
 
-})(UIController, userController, moviesController, movieController);
+})();
 
 
 controller.init();

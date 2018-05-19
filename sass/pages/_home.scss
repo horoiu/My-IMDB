@@ -162,6 +162,61 @@
         }
     }
 
+    &__movie {
+        grid-row: 2 / 4;
+        grid-column: 1 / 3;
+              
+        justify-content: space-around;
+        // background-color: lightslategrey;
+        
+        &--details {
+            display: flex;
+            color: white;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        &--img {
+            transform: scale(1.5);
+            margin-top: 19rem;
+            margin-left: 15rem;
+        }
+
+        &--info {
+            margin-top: 2rem;
+            margin-left: 15rem;
+            margin-right: 10rem;
+
+            
+
+            &-title {
+                display: flex;
+                justify-content: center;
+                // background-color: yellow;
+                color: rgb(235, 223, 223);                
+                font-size: 4.2rem;
+                line-height: 5rem;
+                position: relative;
+                margin: 0 auto;
+                margin-bottom: 2rem;
+            }
+            
+            & > p {
+                // background-color: yellow;
+                font-size: 2.6rem;
+                line-height: 3.3rem;
+
+                & > span:first-of-type {
+                    margin-right: 1rem;
+                    font-weight: 600;
+                    color: rgb(241, 233, 233);
+                }
+            }
+
+        }
+
+    }
+
     &__pagination {
         grid-row: 3 / 4;
         grid-column: 1 / 3;

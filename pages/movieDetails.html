@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link type="text/css" rel="stylesheet" href="css/style.css"></link>
+    <link type="text/css" rel="stylesheet" href="../css/style.css"></link>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
     
 
-    <title>My IMBD</title>
+    <title>My IMBD - Movie-Details</title>
 </head>
 <body class="container">
 
@@ -20,7 +20,7 @@
         <h1 class="hidden">Header</h1>
 
         <div class="header__logo-box">
-            <a href="index.html" class="header__logo-link" title="Home">
+            <a href="../index.html" class="header__logo-link" title="Home">
                 <svg class="icon icon-video-camera">
                     <use xlink:href="#icon-video-camera">
                         <symbol id="icon-video-camera" viewBox="0 0 32 32">
@@ -67,7 +67,6 @@
         </form>
 
         <form class="modal__register hidden">
-        <!-- form class="modal__register hidden" action="https://ancient-caverns-16784.herokuapp.com/auth/register" method="post" -->
 
             <h1 class="modal__register-heading">Create a new account</h1>
             <div class="modal__register-inputs">
@@ -91,54 +90,12 @@
 
     <section class="content">
 
-        <section class="content__search">
-            <input class="content__search-bar" type="search" placeholder="Search for a movie ..."></input>
-            <button class="content__search-btn">Button</button>
-            <select class="content__search-selector">Movie type selector
-                <option selected>All movies</option>
-                <option>Action</option>
-                <option>Adventure</option>
-                <option>Animation</option>
-                <option>Biography</option>
-                <option>Comedy</option>
-                <option>Crime</option>
-                <option>Drama</option>
-                <option>Fantasy</option>
-                <option>Sci-Fi</option>
-                <!-- <option></option> -->
-                <!-- <option></option> -->
-            </select>
-        </section>
-
         <section class="content__movies">
         </section>
 
         <section class="content__movie">
         </section>
 
-        <section class="content__pagination">
-
-            <ul class="content__pagination-btns">
-                <li class="content__pagination-btns--prev">
-                    <span>Previous page</span>
-                </li>
-                <li class="content__pagination-btns--curr">
-                    <span>Page 1</span>
-                </li>
-                <li class="content__pagination-btns--next">
-                    <span>Next page</span>
-                </li>
-            </ul>
-
-
-
-
-
-            <!-- <button class="content__pagination-prev">Prev</button>
-            <button class="content__pagination-curr" disabled>Page</button>
-            <button class="content__pagination-next">Next</button> -->
-
-        </section>
 
     </section>
 
@@ -151,15 +108,15 @@
 
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script> -->
-    <script src="script/jquery-3.3.1.js" defer></script>
+    <script src="../script/jquery-3.3.1.js" defer></script>
 
 
 
-    <script src="script/UIController.js" defer></script>
-    <script src="script/userController.js" defer></script>
-    <script src="script/moviesController.js" defer></script>
-    <script src="script/movieController.js" defer></script>
+    <script src="../script/UIController.js" defer></script>
+    <script src="../script/userController.js" defer></script>
+    <script src="../script/moviesController.js" defer></script>
+    <script src="../script/movieController.js" defer></script>
 
-    <script src="script/app.js" defer></script>
+    <script src="../script/app.js" defer></script>
 </body>
 </html>

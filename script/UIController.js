@@ -23,6 +23,7 @@ let UIController  = (function() {
         modalLoginMsg: document.querySelector('.modal__login-msg'),
         modalRegisterMsg: document.querySelector('.modal__register-msg'),
         moviesContainer: document.querySelector('.content__movies'),
+        movieContainer: document.querySelector('.content__movie'),
         paginationContainer: document.querySelector('.content__pagination'),
         paginPrev: document.querySelector('.content__pagination-btns--prev'),
         paginCurr: document.querySelector('.content__pagination-btns--curr'),
@@ -30,13 +31,19 @@ let UIController  = (function() {
 
     };
 
+    let getDOMStrings = function() {
+        return DOMStrings;
+    };
+
     let data = {
         modal: false,
         moviesResponse: {},
         movieResponse: {},
         movieID: '',
+    };
 
-
+    let getData = function() {
+        return data;
     };
 
     let showMovies = function(movies) {
@@ -46,7 +53,7 @@ let UIController  = (function() {
 
         for (i = 0; i <= movies.length-1; i++ ) {             
             let movie = `<div class="content__movies-movie movie-${i+1}" id="${movies[i]._id}"> 
-                            <img class="content__movies-movie--img" src="${movies[i].Poster}"       
+                            <img class="content__movies-movie--img" src="${movies[i].Poster}">       
                             <a class="content__movies-movie--link">
                                 <div class="content__movies-movie--rating">
                                     
@@ -90,61 +97,112 @@ let UIController  = (function() {
             // console.log(movies[i]);
             movies[i].addEventListener('click', function() {
                 // clickEvent(movies[i].id);
+                data.movieID = movies[i].id;
                 movieController.getMovie(movies[i].id);
             });
         };
     };
     
     let showMovie = function(movie) {
-        console.log('UIController - showMovie: ', movie);
-        let html, container, i  ;
-        html = '';  
-        // DOMStrings.moviesContainer.innerHTML = html;  
+        console.log('UIController - showMovie: ', movie);   
+
+        //save response with movie details inside 'data' object
+        data.movieResponse = movie;
+
+        // clear render container: delete movies & hide pagination
+        clearContainer('movies');
+        hidePagination();
+
+
            
+        let item = `<div class="content__movie--details" id="${movie._id}"> 
 
-        // for (i = 0; i <= movies.length-1; i++ ) {             
-        //     let movie = `<div class="content__movies-movie movie-${i+1}" id="${movies[i]._id}"> 
-        //                     <img class="content__movies-movie--img" src="${movies[i].Poster}"       
-        //                     <a class="content__movies-movie--link">
-        //                         <div class="content__movies-movie--rating">
-                                    
-        //                             <p class="star">&starf;</p>
-        //                             <div>
-        //                                 <p class="ratings">
-        //                                     <span>${movies[i].imdbRating}</span>
-        //                                     <span>/ 10</span>
-        //                                 </p>
-        //                                 <p class="voters">${movies[i].imdbVotes}</p>
-        //                             </div>
-                                    
-        //                         </div>
-                                
-        //                         <h1 class="content__movies-movie--title">
-        //                         ${movies[i].Title} &nbsp;
-        //                         </h1>
-                                
-        //                         <div class="content__movies-movie--details">
-        //                             <p>
-        //                                 <span>${movies[i].Year} &nbsp;</span>
-        //                                 <span>&nbsp; ${movies[i].Runtime}</span>
-        //                             </p>
-        //                             <p>&nbsp; ${movies[i].Genre} &nbsp;</p>
-        //                         </div>
-        //                     </a>       
-        //                 </div>`
+                        <div class="content__movie--img">
+                            <img src="${movie.Poster}"> 
+                        </div>
 
-        //     html += movie;  
-        // };
+                        <div class="content__movie--info">
+                            
+                            <h1 class="content__movie--info-title">
+                                ${movie.Title}
+                            </h1>
+
+                            <p class="content__movie--info-director">
+                                <span>Director: </span>
+                                <span>${movie.Director}</span>
+                            </p>
+                            <p class="content__movie--info-actors">
+                                <span>Actors: </span>
+                                <span>${movie.Actors}</span>
+                            </p>
+                            <p class="content__movie--info-genre">
+                                <span>Genre: </span>
+                                <span>${movie.Genre}</span>
+                            </p>
+                            <p class="content__movie--info-rated">
+                                <span>Rated: </span>
+                                <span>${movie.Rated}</span>
+                            </p>
+                            <p class="content__movie--info-runtime">
+                                <span>Runtime: </span>
+                                <span>${movie.Runtime}</span>
+                            </p>
+                            <p class="content__movie--info-awards">
+                                <span>Awards: </span>
+                                <span>${movie.Awards}</span>
+                            </p>
+                            <p class="content__movie--info-released">
+                                <span>Release date: </span>
+                                <span>${movie.Released}</span>
+                            </p>
+                            <p class="content__movie--info-ratings">
+                                <span>IMDB Rating: </span>
+                                <span>${movie.imdbRating} out of ${movie.imdbVotes} votes</span>
+                            </p>
+                            <p class="content__movie--info-production">
+                                <span>Production: </span>
+                                <span>${movie.Production}</span>
+                            </p>
+                            <p class="content__movie--info-writer">
+                                <span>Writer: </span>
+                                <span>${movie.Writer}</span>
+                            </p>
+                            </br>
+                            <p class="content__movie--info-plot">
+                                <span>Description: </span>
+                                <span>${movie.Plot}</span>
+                            </p>
+                            
+                        </div>
+                        
+                        
+
+                    </div>`
                     
-        // DOMStrings.moviesContainer.innerHTML = html;  
+
+
+
+        DOMStrings.movieContainer.innerHTML = item;  
+    };
+
+    let hidePagination = function() {
+        DOMStrings.paginationContainer.classList.add('hidden');
+    };
+    
+    let showPagination = function() {
+        DOMStrings.paginationContainer.classList.remove('hidden');
+    };
+
+    let clearContainer = function(container) {
+        if (container === 'movies') {
+            DOMStrings.moviesContainer.innerHTML = '';  
+        } else if (container === 'movie') {
+            DOMStrings.movieContainer.innerHTML = '';  
+        } else return;
     };
 
 
     return {
-
-        getDOMStrings: function() {
-            return DOMStrings;
-        },
 
         setModalState: function(state) {
             data.modal = state;
@@ -223,11 +281,14 @@ let UIController  = (function() {
             data.moviesResponse = response;
         },
 
+        getDOMStrings,
+        getData,
         setMovieClickEvent,
-
         showMovies,
-
         showMovie,
+        hidePagination,
+        showPagination,
+        clearContainer
 
         
 
