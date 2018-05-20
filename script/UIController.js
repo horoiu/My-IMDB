@@ -6,6 +6,7 @@ let UIController  = (function() {
         headerLoginBtn: document.querySelector('.header__btn--login'),
         headerLogoutBtn: document.querySelector('.header__btn--logout'),
         headerRegisterBtn: document.querySelector('.header__btn--register'),
+        headerAddMovieBtn: document.querySelector('.header__btn--addMovie'),
         registerUser: document.querySelector('.modal__register-inputs--user'),
         registerPass1: document.querySelector('.modal__register-inputs--pass1'),
         registerPass2: document.querySelector('.modal__register-inputs--pass2'),
@@ -24,10 +25,10 @@ let UIController  = (function() {
         modalRegisterMsg: document.querySelector('.modal__register-msg'),
         moviesContainer: document.querySelector('.content__movies'),
         movieContainer: document.querySelector('.content__movie'),
-        paginationContainer: document.querySelector('.content__pagination'),
-        paginPrev: document.querySelector('.content__pagination-btns--prev'),
-        paginCurr: document.querySelector('.content__pagination-btns--curr'),
-        paginNext: document.querySelector('.content__pagination-btns--next'),
+        buttonsContainer: document.querySelector('.content__buttons'),
+        paginationBtnsContainer: document.querySelector('.content__buttons-pagination'),
+        movieBtnsContainer: document.querySelector('.content__buttons-movie'),
+        
 
     };
 
@@ -71,7 +72,7 @@ let UIController  = (function() {
 
     let showMovies = (movies) => {
         // console.log('showMovies: ', movies[0]);
-        let html, container, i  ;
+        let html, i, buttons;
         html = '';     
 
         for (i = 0; i <= movies.length-1; i++ ) {             
@@ -107,7 +108,8 @@ let UIController  = (function() {
 
             html += movie;  
         };
-                    
+
+                              
         DOMStrings.moviesContainer.innerHTML = html;  
     };
 
@@ -127,14 +129,15 @@ let UIController  = (function() {
     };
     
     let showMovie = (movie) => {
-        console.log('UIController - showMovie: ', movie);   
+        // console.log('UIController - showMovie: ', movie);   
 
         //save response with movie details inside 'data' object
         data.movieResponse = movie;
 
         // clear render container: delete movies & hide pagination
         clearContainer('movies');
-        hidePagination();
+        clearContainer('pagination');
+        // hidePagination();
            
         let item = `<div class="content__movie--details" id="${movie._id}"> 
 
@@ -195,23 +198,6 @@ let UIController  = (function() {
                             </p>
                             
                         </div>
-                    </div>
-                    
-                    <div class="content__movie--btns">
-                        <ul>
-                            <li class="content__movie--btns--back">
-                                <span>Go Back</span>
-                            </li>
-                            <li class="content__movie--btns--add">
-                                <span>Add Movie</span>
-                            </li>
-                            <li class="content__movie--btns--edit">
-                                <span>Edit Movie</span>
-                            </li>
-                            <li class="content__movie--btns--delete">
-                                <span>Delete Movie</span>
-                            </li>
-                        </ul>
                     </div>`
                     
         DOMStrings.movieContainer.innerHTML = item;  
@@ -221,64 +207,123 @@ let UIController  = (function() {
         return data.movieResponse;
     };
 
+    let showPagination = () => {
+        // DOMStrings.paginationContainer.classList.remove('hidden');
+        
+        let buttons =   `<ul>
+                            <li class="content__buttons-pagination--prev btn-2">
+                                <span>Previous page</span>
+                            </li>
+                            <li class="content__buttons-pagination--curr btn-2">
+                                <span>Page 1</span>
+                            </li>
+                            <li class="content__buttons-pagination--next btn-2">
+                                <span>Next page</span>
+                            </li>
+                        </ul>`
+
+        
+        DOMStrings.paginationBtnsContainer.innerHTML = buttons; 
+    };
+
     let setPagination = (data) => {
         // console.log('setPagination:', data);
-        const prevPage = data.links.prev;
-        const nextPage = data.links.next;
 
-        DOMStrings.paginPrev.onclick = function() {
-            if (prevPage) {
-                moviesController.getMovies(prevPage);
+        const btnPrev = document.querySelector('.content__buttons-pagination--prev');
+        const btnNext = document.querySelector('.content__buttons-pagination--next');
+        const btnCurr = document.querySelector('.content__buttons-pagination--curr');
+        
+        const prevPageLink = data.links.prev;
+        const nextPageLink = data.links.next;
+
+        btnPrev.onclick = () => {
+            if (prevPageLink) {
+                moviesController.getMovies(prevPageLink);
             } else return;
         };
 
-        DOMStrings.paginNext.onclick = function() {
-            if (nextPage) {
-                moviesController.getMovies(nextPage);
+        btnNext.onclick = () => {
+            if (nextPageLink) {
+                moviesController.getMovies(nextPageLink);
             } else return;
         };
 
-        DOMStrings.paginCurr.textContent = `Page ${data.currentPage} of ${data.numberOfPages}`;
-    };
-
-    let showPagination = () => {
-        DOMStrings.paginationContainer.classList.remove('hidden');
-    };
-
-    let hidePagination = () => {
-        DOMStrings.paginationContainer.classList.add('hidden');
+        btnCurr.textContent = `Page ${data.currentPage} of ${data.numberOfPages}`;
     };
 
     let showMovieButtons = () => {
-        console.log("inside 'showMovieButtons'");
+        // console.log("inside 'showMovieButtons'");
+        let buttons; 
 
-        if (data.accessToken) {
-            // DOMStrings.paginationContainer.classList.remove('hidden'); 
+        if (data.accessToken) {       
+            buttons =   `<ul>
+                            <li class="content__movie--btns--back btn-2">
+                                <span>Go Back</span>
+                            </li>
+                            <li class="content__movie--btns--edit btn-2">
+                                <span>Edit Movie</span>
+                            </li>
+                            <li class="content__movie--btns--delete btn-2">
+                                <span>Delete Movie</span>
+                            </li>
+                        </ul>`
+
         } else {
-            // DOMStrings.paginationContainer.classList.remove('hidden');
+            buttons =   `<ul>
+                            <li class="content__movie--btns--back btn-2">
+                                <span>Go Back</span>
+                            </li>
+                        </ul>`
         };
 
-    };
-    
-    let hideMovieButtons = () => {
-        console.log("inside 'hideMovieButtons'");
+        DOMStrings.movieBtnsContainer.innerHTML = buttons;
 
+        //set eventListeners on each button
+        let goBackBtn = document.querySelector('.content__movie--btns--back');
+        goBackBtn.addEventListener('click', () => {
+            let page = (getData()).moviesResponse.pagination.links.self;
+            clearContainer('movie');
+            clearContainer('movieBtns');
+            moviesController.getMovies(page);
+        });
+
+        let editMovieBtn = document.querySelector('.content__movie--btns--edit');
+        editMovieBtn.addEventListener('click', () => {
+            clearContainer('movie');
+            clearContainer('movieBtns');
+            editMovieController.editMovie();
+        });
+
+        let deleteMovieBtn = document.querySelector('.content__movie--btns--delete');
+        deleteMovieBtn.addEventListener('click', () => {
+            clearContainer('movie');
+            clearContainer('movieBtns');
+            deleteMovieController.deleteMovie();
+        });
     };
 
     let clearContainer = (container) => {
-        if (container === 'movies') {
-            DOMStrings.moviesContainer.innerHTML = '';  
-        } else if (container === 'movie') {
-            DOMStrings.movieContainer.innerHTML = '';  
-        } else return;
+
+        switch (container) {
+            case 'movies':
+                DOMStrings.moviesContainer.innerHTML = '';  
+                break;
+                case 'movie':
+                DOMStrings.movieContainer.innerHTML = '';  
+                break;
+                case 'pagination':
+                DOMStrings.paginationBtnsContainer.innerHTML = '';
+                break;
+                case 'movieBtns':
+                DOMStrings.movieBtnsContainer.innerHTML = '';
+                break;
+            default: 
+                console.log('clearContainer error: ', container)
+        }
     };
 
 
     return {
-
-        // setModalState: (state) => {
-        //     data.modal = state;
-        // },
 
         getModalState: () => {
             return data.modal;
@@ -347,6 +392,7 @@ let UIController  = (function() {
             DOMStrings.headerLoginBtn.classList.toggle('hidden');
             DOMStrings.headerRegisterBtn.classList.toggle('hidden');
             DOMStrings.headerLogoutBtn.classList.toggle('hidden');
+            DOMStrings.headerAddMovieBtn.classList.toggle('hidden');
         },
         
         getDOMStrings,
@@ -357,10 +403,8 @@ let UIController  = (function() {
         showMovie,
         getMovieResponse,
         setPagination,
-        hidePagination,
         showPagination,
         showMovieButtons,
-        hideMovieButtons,
         clearContainer
 
     }

@@ -27,6 +27,10 @@ let moviesController  = (function() {
 
                     
                     // showPagination
+                    UIController.showPagination();
+
+
+                    // set pagination links
                     UIController.setPagination(response.pagination);
                     
                     //set eventListener on each movie

@@ -6,6 +6,7 @@ let userController  = (function() {
 
     let setTokenCookie = (token) => {
         document.cookie = 'accessToken=' +  token;
+        UIController.setData('accessToken', token);
     };
 
     let getTokenCookie = () => {
@@ -35,6 +36,8 @@ let userController  = (function() {
 
     let deleteTokenCookie = () => {
         document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        UIController.setData('accessToken', undefined);
+        
     };
 
     let validateLoginFields = () => {

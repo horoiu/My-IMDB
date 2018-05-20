@@ -40,9 +40,10 @@
         </div>
         
         <div class="header__btn-box">
-            <button class="header__btn--login btn">Log-In</button>
-            <button class="header__btn--register btn">Register</button>
-            <button class="header__btn--logout btn hidden">Log-Out</button>
+            <button class="header__btn--login btn-1">Log-In</button>
+            <button class="header__btn--register btn-1">Register</button>
+            <button class="header__btn--addMovie btn-1 hidden">Add Movie</button>
+            <button class="header__btn--logout btn-1 hidden">Log-Out</button>
         </div>
 
     </header>
@@ -59,9 +60,9 @@
             <span class="modal__login-msg hidden">Status message</span>            
             <h1 class="modal__login-heading">Not registered?</h1>
             <div class="modal__login-buttons">
-                <input type="button" value="Log-In" class="modal__login-buttons--login btn">
-                <input type="reset" value="Cancel" class="modal__login-buttons--cancel btn">
-                <input type="button" value="Register" class="modal__login-buttons--register btn">
+                <input type="button" value="Log-In" class="modal__login-buttons--login btn-1">
+                <input type="reset" value="Cancel" class="modal__login-buttons--cancel btn-1">
+                <input type="button" value="Register" class="modal__login-buttons--register btn-1">
             </div>
 
         </form>
@@ -78,9 +79,9 @@
             <span class="modal__register-msg hidden">Status message</span>
             <h1 class="modal__register-heading">Already registered?</h1>
             <div class="modal__register-buttons">
-                <input type="submit" value="Register" class="modal__register-buttons--register btn">
-                <input type="reset" value="Cancel" class="modal__register-buttons--cancel btn">
-                <input type="button" value="Log-In" class="modal__register-buttons--login btn">
+                <input type="submit" value="Register" class="modal__register-buttons--register btn-1">
+                <input type="reset" value="Cancel" class="modal__register-buttons--cancel btn-1">
+                <input type="button" value="Log-In" class="modal__register-buttons--login btn-1">
             </div>
 
         </form>
@@ -110,27 +111,28 @@
             </select>
         </section>
 
+        <!-- container for 'showMovies' module (first movies or search results) -->
         <section class="content__movies">
         </section>
 
-        <section class="content__pagination">
+        
 
-            <ul class="content__pagination-btns">
-                <li class="content__pagination-btns--prev">
-                    <span>Previous page</span>
-                </li>
-                <li class="content__pagination-btns--curr">
-                    <span>Page 1</span>
-                </li>
-                <li class="content__pagination-btns--next">
-                    <span>Next page</span>
-                </li>
-            </ul>
+        <!-- container for 'showMovie' details module -->
+        <section class="content__movie">
+        </section>    
+        
+        <!-- container for various buttons -->
+        <section class="content__buttons">
+            
+            <!-- buttons for 'showMovies' module: Previous Page / Current Page / Next Page -->        
+            <section class="content__buttons-pagination">
+            </section>
+            
+            <!-- buttons for 'showMovie' details module: Back / AddMovie / EditMovie / DeleteMovie -->
+            <section class="content__buttons-movie">
+            </section>
 
         </section>
-
-        <section class="content__movie">
-        </section>     
 
     </section>
 
@@ -151,6 +153,9 @@
     <script src="script/userController.js" defer></script>
     <script src="script/moviesController.js" defer></script>
     <script src="script/movieController.js" defer></script>
+    <script src="script/addMovieController.js" defer></script>
+    <script src="script/deleteMovieController.js" defer></script>
+    <script src="script/editMovieController.js" defer></script>
 
     <script src="script/app.js" defer></script>
 </body>

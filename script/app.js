@@ -1,33 +1,4 @@
-// //////////////// UIController 
-// here
-
-
-// ////////////////// userController
-// here
-
-
-
-let addMovieController  = (function() {
-})();
-
-
-let deleteMovieController  = (function() {
-})();
-
-
-let editMovieController  = (function() {
-})();
-
-
-// //////////////// getMoviesController 
-// here
-
-
-// //////////////// movieController 
-// here
-
-
-////////////////// controller
+////////////////// appController
 
 let controller = (function() {
     
@@ -56,6 +27,14 @@ let controller = (function() {
         DOM.headerLogoutBtn.onclick = () => {
             userController.logoutRequest();
         };
+
+        DOM.headerAddMovieBtn.addEventListener('click', () => {
+            UIController.clearContainer('movie');
+            UIController.clearContainer('movies');
+            UIController.clearContainer('movieBtns');
+            UIController.clearContainer('pagination');
+            addMovieController.addMovie();
+        });
 
         DOM.modal.onclick = (event) => {                     
             if (event.target.className === 'modal') {

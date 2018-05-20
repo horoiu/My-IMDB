@@ -98,7 +98,7 @@ body {
   font-size: 2rem;
   font-weight: 400; }
 
-.btn, .btn:link, .btn:visited {
+.btn-1, .btn-1:link, .btn-1:visited {
   font-size: 2rem;
   font-weight: 700;
   width: 10rem;
@@ -109,7 +109,7 @@ body {
   background-color: #9bc2f5;
   transition: all .1s; }
 
-.btn:hover, .btn:focus {
+.btn-1:hover, .btn-1:focus {
   outline: none;
   background-color: #958af5;
   color: #eee;
@@ -117,12 +117,32 @@ body {
   transform: translateX(-2px) translateY(-3px);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); }
 
-.btn:active {
+.btn-1:active {
   transform: translateX(0px) translateY(0px);
   box-shadow: 0 0.3rem 0.7rem rgba(0, 0, 0, 0.4); }
 
-.btn:first-of-type {
+.btn-1:nth-of-type(2n+1) {
   margin-right: 4rem; }
+
+.btn-2 {
+  background-color: rgba(101, 105, 110, 0.9);
+  height: 3rem;
+  margin-right: 2.5rem;
+  margin-bottom: .3rem;
+  padding: 0.3rem 1rem 0 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 1.8rem;
+  font-weight: 400;
+  transition: .2s ease; }
+  .btn-2:hover:not(.content__buttons-pagination--curr) {
+    cursor: pointer;
+    background-color: rgba(93, 154, 224, 0.9);
+    box-shadow: 0px 0px 11px 1px aqua;
+    color: white; }
+    .btn-2:hover:not(.content__buttons-pagination--curr):active {
+      transform: translateX(2px) translateY(3px); }
 
 .input-acc {
   box-sizing: border-box;
@@ -412,36 +432,24 @@ body {
           margin-right: 1rem;
           font-weight: 600;
           color: #f1e9e9; }
-  .content__pagination {
+  .content__buttons {
     grid-row: 3 / 4;
     grid-column: 1 / 3;
     box-sizing: border-box;
     background: rgba(51, 51, 51, 0.9);
     color: #eee; }
-    .content__pagination-btns {
-      width: 45rem;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      position: relative; }
-      .content__pagination-btns > li {
-        display: inline-flex;
-        background-color: rgba(101, 105, 110, 0.9);
-        height: 3rem;
-        margin-right: 2.5rem;
-        border-radius: 5px;
-        outline: none;
-        font-size: 1.8rem;
-        font-weight: 400;
-        margin-bottom: .3rem;
-        transition: .2s ease;
-        border: none;
-        padding: 0.3rem 1rem 0 1rem; }
-        .content__pagination-btns > li:hover:not(:nth-of-type(2)) {
-          cursor: pointer;
-          background-color: rgba(93, 154, 224, 0.9);
-          box-shadow: 0px 0px 11px 1px aqua;
-          color: white; }
-          .content__pagination-btns > li:hover:not(:nth-of-type(2)):active {
-            transform: translateX(2px) translateY(3px); }
+    .content__buttons-pagination, .content__buttons-movie {
+      position: relative;
+      top: 2.5rem; }
+      .content__buttons-pagination > ul, .content__buttons-movie > ul {
+        width: 45rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .content__buttons-pagination > ul > li, .content__buttons-movie > ul > li {
+          list-style-type: none; }
