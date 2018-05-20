@@ -1,9 +1,10 @@
 //////////////// showMovieController 
 
-let movieController  = (function(UIctrl) {
-    const DOM = UIctrl.getDOMStrings();
+let movieController  = (function() {
+
+    const DOM = UIController.getDOMStrings();
     
-    let getMovie = function(id) {
+    let getMovie = (id) => {
 
         ////////////// - AJAX START
         $(function() {
@@ -14,26 +15,21 @@ let movieController  = (function(UIctrl) {
                 success: function(response) {
                     // console.log('Movie GET success: ', response);
 
-                    UIctrl.showMovie(response);
+                    UIController.showMovie(response);
+
+                    // save the response in UIController 'data' object
+                    UIController.setData('movieResponse', response);
+
+                    // // show movie buttons
+                    UIController.showMovieButtons();
 
 
 
 
-
-                    // // showMovies
-                    // UIctrl.showMovies(response.results);
-
-                    // //
-                    // UIctrl.setMoviesResponse(response);
-
-                    // // showPagination
-                    // setPagination(response.pagination);
-
-                    // // console.log('getMovies is done');
+                    // // console.log('getMovie is done');
                 },
                 error: function(response) {
                     console.log('Movie GET error: ', response);
-                    
                 }
             })
         }); 
@@ -41,9 +37,6 @@ let movieController  = (function(UIctrl) {
     };
 
     return {
-
         getMovie,
-
-    }
-    
-})(UIController);
+    }  
+})();

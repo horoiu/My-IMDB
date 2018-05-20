@@ -11,10 +11,6 @@
     align-items: center;
     justify-content: space-between;
 
-    &__logo-box {
-        
-    }
-
     &__text-box {
        display: flex;
        flex-direction: column;
@@ -26,24 +22,14 @@
         align-items: center;
         justify-content: space-between;
         width: auto;
-        // background-color: orangered;
-        
-        &--login {
-        }
-
-        &--register {
-        }
-
-        &--logout {
-        }
     }
 }
 
 .icon {
     display: inline-block;
 
-    width: 8rem;
-    height: 8rem;
+    width: 6rem;
+    height: 6rem;
     stroke-width: 0;
     stroke: currentColor;
     fill: $color-primary-light;

@@ -1,32 +1,11 @@
 //////////////// getMoviesController 
 
 let moviesController  = (function() {
+
     const DOM = UIController.getDOMStrings();
-    let address, data, method, message, token;
-    address = 'https://ancient-caverns-16784.herokuapp.com/movies';
-    method = 'GET';
-    
-    let setPagination = function(data) {
-        // console.log('setPagination:', data);
-        const prevPage = data.links.prev;
-        const nextPage = data.links.next;
+    let address = 'https://ancient-caverns-16784.herokuapp.com/movies';
 
-        DOM.paginPrev.onclick = function() {
-            if (prevPage) {
-                getMovies(prevPage);
-            } else return;
-        };
-
-        DOM.paginNext.onclick = function() {
-            if (nextPage) {
-                getMovies(nextPage);
-            } else return;
-        };
-
-        DOM.paginCurr.textContent = `Page ${data.currentPage} of ${data.numberOfPages}`;
-    }
-
-    let getMovies = function(link) {
+    let getMovies = (link) => {
         if (link === '' || link === undefined) {
             url = address;
         } else {
@@ -36,20 +15,19 @@ let moviesController  = (function() {
         $(function() {
             $.ajax({
                 url: url,
-                type: method,
-                // data: data,
+                type: 'GET',
                 success: function(response) {
                     // console.log('Movies GET success: ', response);
                     
                     // save response in UIController variable
-                    UIController.setMoviesResponse(response);
+                    UIController.setData('moviesResponse', response);
 
                     // showMovies
                     UIController.showMovies(response.results);
 
                     
                     // showPagination
-                    setPagination(response.pagination);
+                    UIController.setPagination(response.pagination);
                     
                     //set eventListener on each movie
                     UIController.setMovieClickEvent(response.results);
@@ -78,9 +56,6 @@ let moviesController  = (function() {
     };
 
     return {
-
         getMovies,
-
-    }
-    
+    }  
 })();

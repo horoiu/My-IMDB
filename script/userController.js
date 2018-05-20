@@ -1,22 +1,22 @@
 ////////////////// userController 
 ////////////////// only for LogIn / Register / LogOut
 
-let userController  = (function(UIctrl) {
-    const DOM = UIctrl.getDOMStrings();
+let userController  = (function() {
+    const DOM = UIController.getDOMStrings();
 
-    let setTokenCookie = function(token) {
+    let setTokenCookie = (token) => {
         document.cookie = 'accessToken=' +  token;
     };
 
-    let getTokenCookie = function() {
+    let getTokenCookie = () => {
         let cookieString, cookiesArray, cookies;
             
         cookieString = document.cookie;
         cookiesArray = cookieString.split('; ');
         cookies = {};
         
-        cookiesArray.forEach(function(item) {
-            let cookie= item.split('=');
+        cookiesArray.forEach(item => {
+            let cookie = item.split('=');
             cookies[cookie[0]] = cookie[1];
 
             // console.log(cookies);
@@ -24,7 +24,8 @@ let userController  = (function(UIctrl) {
         });
 
         const accessToken = cookies.accessToken;
-        
+        UIController.setData('accessToken', accessToken);
+
         return accessToken; 
         
         // console.log(`cookieString: ${cookieString}`);
@@ -32,16 +33,44 @@ let userController  = (function(UIctrl) {
         // console.log(`cookies: ${cookies}`); 
     };
 
-    let deleteTokenCookie = function() {
+    let deleteTokenCookie = () => {
         document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     };
 
-    let loginRequest = function() {
-        let user, pass, url, data, method, message, token;
+    let validateLoginFields = () => {
+        let user, pass, message;
+        user = DOM.loginUser.value;
+        pass = DOM.loginPass.value;
+        
+        if (user === '' || pass === '') {
+            message = 'Fields cannot be empty!';
+            UIController.showLoginMessage(message, 'error');
+            return false;
+        } else return true;
+    };
+
+    let validateRegisterFields = () => {
+        let user, pass1, pass2, message;
+        user = DOM.registerUser.value;
+        pass1 = DOM.registerPass1.value;
+        pass2 = DOM.registerPass2.value;
+
+        if (user === '' || pass1 === '' || pass2 === '') {
+            message  = 'Fields cannot be empty!';
+            UIController.showRegisterMessage(message, 'error');
+            return false;
+        } else if (pass1 !== pass2) {
+            message  = 'Please check your password!';
+            UIController.showRegisterMessage(message, 'error');
+            return false;
+        } else return true;
+    };
+
+    let loginRequest = () => {
+        let user, pass, url, data, message, token;
         user = DOM.loginUser.value;
         pass = DOM.loginPass.value;
         url = 'https://ancient-caverns-16784.herokuapp.com/auth/login';
-        method = 'POST';
         
         data = {
             username: user,
@@ -49,61 +78,60 @@ let userController  = (function(UIctrl) {
         };
 
         message = `${user}, please wait!`
-        UIctrl.showLoginMessage(message, 'status');
+        UIController.showLoginMessage(message, 'status');
 
         ////////////// - AJAX START
         $(function() {
             $.ajax({
                 url: url,
-                type: method,
+                type: 'POST',
                 data: data,
                 success: function(response) {
                     console.log(`Login success.`);
                     
-                    UIctrl.hideModalMessage();
+                    UIController.hideModalMessage();
                     
                     message = `Welcome back ${user}.` ;
-                    UIctrl.showLoginMessage(message, 'status');
+                    UIController.showLoginMessage(message, 'status');
                     
                     // setTimeout to hideModal
                     setTimeout(function() {
-                        UIctrl.hideModal()
+                        UIController.hideModal()
                     }, 3000);
 
                     //toggleHeaderButtons
-                    UIctrl.toggleHeaderButtons();
+                    UIController.toggleHeaderButtons();
 
                     //setCookie with token
                     setTokenCookie(response.accessToken);            
                 },
                 error: function(response) {
-                    UIctrl.hideModalMessage();
+                    UIController.hideModalMessage();
                     
                     message = response.responseJSON.message;
-                    UIctrl.showLoginMessage(message, 'error');
+                    UIController.showLoginMessage(message, 'error');
                 },
             })
         });
         //////////// - END AJAX
     };
 
-    let logoutRequest = function() {
-        let token, url, method, header;
+    let logoutRequest = () => {
+        let token, url, header;
         token = getTokenCookie();
         url = 'https://ancient-caverns-16784.herokuapp.com/auth/logout';
-        method: 'GET';
         header = new Headers();
 
         $(function() {
             $.ajax({
                 url: url,
-                type: method,
+                type: 'GET',
                 headers:{'x-auth-token': token},
                 success: function(response) {
                     console.log(`Logout success.`);
                     // setTokenCookie('');
                     deleteTokenCookie();
-                    UIctrl.toggleHeaderButtons();
+                    UIController.toggleHeaderButtons();
                 },
                 error: function(response) {
                     console.log(`Logout error: ${response}`)
@@ -112,12 +140,10 @@ let userController  = (function(UIctrl) {
         });
     };
 
-    let registerRequest = function() {        
-        let user, pass, url, data, method, message;
+    let registerRequest = () => {        
+        let user, pass, data, message;
         user = DOM.registerUser.value;
         pass = DOM.registerPass1.value;
-        method = 'POST';
-        url = 'https://ancient-caverns-16784.herokuapp.com/auth/register';
         
         data = {
             username: user,
@@ -125,40 +151,40 @@ let userController  = (function(UIctrl) {
         };
                 
         message = `${user}, please wait!`
-        UIctrl.showRegisterMessage(message, 'status');
+        UIController.showRegisterMessage(message, 'status');
 
         ////////////// - AJAX START
         $(function() {
             $.ajax({
-                url: url,
-                type: method,
+                url: 'https://ancient-caverns-16784.herokuapp.com/auth/register',
+                type: 'POST',
                 data: data,
                 contentType: 'application/x-www-form-urlencoded',
                 success: function(response) {
                     console.log(`Register success.`);
-                    UIctrl.hideModalMessage();
+                    UIController.hideModalMessage();
 
                     // setTimeout for welcome message
                     message = `Welcome ${user}.` ;
-                    UIctrl.showRegisterMessage(message, 'status');
+                    UIController.showRegisterMessage(message, 'status');
 
                     //hideModal
                     setTimeout(function() {
-                        UIctrl.hideModal()
+                        UIController.hideModal()
                     }, 3000);
 
                     //toggle HeaderButtons
-                    UIctrl.toggleHeaderButtons();                    
+                    UIController.toggleHeaderButtons();                    
 
                     //setCookie with token
                     setTokenCookie(response.accessToken);
                 },
                 error: function(response) {
-                    UIctrl.hideModalMessage();
+                    UIController.hideModalMessage();
                     console.log(response);
                     
                     message = response.responseJSON.message;
-                    UIctrl.showRegisterMessage(message, 'error');
+                    UIController.showRegisterMessage(message, 'error');
                 },
             })
         });
@@ -208,41 +234,12 @@ let userController  = (function(UIctrl) {
 
     return {
 
-        validateLoginFields: function() {
-            let user, pass, message;
-            user = DOM.loginUser.value;
-            pass = DOM.loginPass.value;
-            
-            if (user === '' || pass === '') {
-                message = 'Fields cannot be empty!';
-                UIctrl.showLoginMessage(message, 'error');
-                return false;
-            } else return true;
-        },
-
-        validateRegisterFields: function() {
-            let user, pass1, pass2, message;
-            user = DOM.registerUser.value;
-            pass1 = DOM.registerPass1.value;
-            pass2 = DOM.registerPass2.value;
-    
-            if (user === '' || pass1 === '' || pass2 === '') {
-                message  = 'Fields cannot be empty!';
-                UIctrl.showRegisterMessage(message, 'error');
-                return false;
-            } else if (pass1 !== pass2) {
-                message  = 'Please check your password!';
-                UIctrl.showRegisterMessage(message, 'error');
-                return false;
-            } else return true;
-        },
-
-
         loginRequest,
         logoutRequest,
         registerRequest,
         getTokenCookie,
+        validateRegisterFields,
+        validateLoginFields,
 
     };
-
-})(UIController);
+})();

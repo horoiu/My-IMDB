@@ -31,22 +31,45 @@ let UIController  = (function() {
 
     };
 
-    let getDOMStrings = function() {
+    let getDOMStrings = () => {
         return DOMStrings;
     };
 
     let data = {
+        accessToken: {},
         modal: false,
         moviesResponse: {},
         movieResponse: {},
         movieID: '',
     };
 
-    let getData = function() {
+    let getData = () => {
         return data;
     };
 
-    let showMovies = function(movies) {
+    let setData = (item, value) => {
+        switch (item) {
+            case 'accessToken': 
+                data.accessToken = value;
+                break;
+            case 'modal':
+                data.modal = value;
+                break;
+            case 'moviesResponse' :
+                data.moviesResponse = value;
+                break;
+            case 'movieResponse' :
+                data.movieResponse = value;
+                break;
+            case 'movieID' :
+                data.movieID = value;
+                break;
+            default: 
+                console.log('UIController data switch error');
+        };
+    };
+
+    let showMovies = (movies) => {
         // console.log('showMovies: ', movies[0]);
         let html, container, i  ;
         html = '';     
@@ -88,7 +111,7 @@ let UIController  = (function() {
         DOMStrings.moviesContainer.innerHTML = html;  
     };
 
-    let setMovieClickEvent = function(response) {
+    let setMovieClickEvent = (response) => {
         // console.log('movieClick response: ', response);
 
         let movies = DOMStrings.moviesContainer.querySelectorAll(".content__movies-movie");
@@ -103,7 +126,7 @@ let UIController  = (function() {
         };
     };
     
-    let showMovie = function(movie) {
+    let showMovie = (movie) => {
         console.log('UIController - showMovie: ', movie);   
 
         //save response with movie details inside 'data' object
@@ -112,8 +135,6 @@ let UIController  = (function() {
         // clear render container: delete movies & hide pagination
         clearContainer('movies');
         hidePagination();
-
-
            
         let item = `<div class="content__movie--details" id="${movie._id}"> 
 
@@ -174,26 +195,77 @@ let UIController  = (function() {
                             </p>
                             
                         </div>
-                        
-                        
-
+                    </div>
+                    
+                    <div class="content__movie--btns">
+                        <ul>
+                            <li class="content__movie--btns--back">
+                                <span>Go Back</span>
+                            </li>
+                            <li class="content__movie--btns--add">
+                                <span>Add Movie</span>
+                            </li>
+                            <li class="content__movie--btns--edit">
+                                <span>Edit Movie</span>
+                            </li>
+                            <li class="content__movie--btns--delete">
+                                <span>Delete Movie</span>
+                            </li>
+                        </ul>
                     </div>`
                     
-
-
-
         DOMStrings.movieContainer.innerHTML = item;  
     };
 
-    let hidePagination = function() {
-        DOMStrings.paginationContainer.classList.add('hidden');
+    let getMovieResponse = () => {
+        return data.movieResponse;
     };
-    
-    let showPagination = function() {
+
+    let setPagination = (data) => {
+        // console.log('setPagination:', data);
+        const prevPage = data.links.prev;
+        const nextPage = data.links.next;
+
+        DOMStrings.paginPrev.onclick = function() {
+            if (prevPage) {
+                moviesController.getMovies(prevPage);
+            } else return;
+        };
+
+        DOMStrings.paginNext.onclick = function() {
+            if (nextPage) {
+                moviesController.getMovies(nextPage);
+            } else return;
+        };
+
+        DOMStrings.paginCurr.textContent = `Page ${data.currentPage} of ${data.numberOfPages}`;
+    };
+
+    let showPagination = () => {
         DOMStrings.paginationContainer.classList.remove('hidden');
     };
 
-    let clearContainer = function(container) {
+    let hidePagination = () => {
+        DOMStrings.paginationContainer.classList.add('hidden');
+    };
+
+    let showMovieButtons = () => {
+        console.log("inside 'showMovieButtons'");
+
+        if (data.accessToken) {
+            // DOMStrings.paginationContainer.classList.remove('hidden'); 
+        } else {
+            // DOMStrings.paginationContainer.classList.remove('hidden');
+        };
+
+    };
+    
+    let hideMovieButtons = () => {
+        console.log("inside 'hideMovieButtons'");
+
+    };
+
+    let clearContainer = (container) => {
         if (container === 'movies') {
             DOMStrings.moviesContainer.innerHTML = '';  
         } else if (container === 'movie') {
@@ -204,38 +276,38 @@ let UIController  = (function() {
 
     return {
 
-        setModalState: function(state) {
-            data.modal = state;
-        },
+        // setModalState: (state) => {
+        //     data.modal = state;
+        // },
 
-        getModalState: function() {
+        getModalState: () => {
             return data.modal;
         },
 
-        hideModal: function() {
-            this.clearAccInputFields();
-            this.setModalState(false);
-            this.hideModalMessage();
+        hideModal: () => {
+            UIController.clearAccInputFields();
+            UIController.setData('modal',false);
+            UIController.hideModalMessage();
             
             DOMStrings.modal.classList.add('hidden');
             DOMStrings.modalLogin.classList.add('hidden');
             DOMStrings.modalRegister.classList.add('hidden');
         },
         
-        toggleModal: function() {
-            this.clearAccInputFields();
-            this.hideModalMessage();
+        toggleModal: () => {
+            UIController.clearAccInputFields();
+            UIController.hideModalMessage();
 
             DOMStrings.modalLogin.classList.toggle('hidden');
             DOMStrings.modalRegister.classList.toggle('hidden');
         },
 
-        clearAccInputFields: function() {
+        clearAccInputFields: () => {
             DOMStrings.modalLogin.reset();
             DOMStrings.modalRegister.reset();
         },
 
-        showRegisterMessage: function(message, type) {
+        showRegisterMessage: (message, type) => {
             DOMStrings.modalRegisterMsg.innerHTML = message;
 
             if(type === 'error') {
@@ -249,7 +321,7 @@ let UIController  = (function() {
             DOMStrings.modalRegisterMsg.classList.remove('hidden');
         },
         
-        showLoginMessage: function(message, type) {
+        showLoginMessage: (message, type) => {
             DOMStrings.modalLoginMsg.innerHTML = message;
             
             if(type === 'error') {
@@ -263,7 +335,7 @@ let UIController  = (function() {
             DOMStrings.modalLoginMsg.classList.remove('hidden');
         },
         
-        hideModalMessage: function() {
+        hideModalMessage: () => {
             DOMStrings.modalLoginMsg.classList.remove('error', 'status');
             DOMStrings.modalLoginMsg.classList.add('hidden');
 
@@ -271,28 +343,25 @@ let UIController  = (function() {
             DOMStrings.modalRegisterMsg.classList.add('hidden');
         },
 
-        toggleHeaderButtons: function() {
+        toggleHeaderButtons: () => {
             DOMStrings.headerLoginBtn.classList.toggle('hidden');
             DOMStrings.headerRegisterBtn.classList.toggle('hidden');
             DOMStrings.headerLogoutBtn.classList.toggle('hidden');
         },
-
-        setMoviesResponse: function(response) {
-            data.moviesResponse = response;
-        },
-
+        
         getDOMStrings,
         getData,
+        setData,
         setMovieClickEvent,
         showMovies,
         showMovie,
+        getMovieResponse,
+        setPagination,
         hidePagination,
         showPagination,
+        showMovieButtons,
+        hideMovieButtons,
         clearContainer
-
-        
-
-        
 
     }
 })();
