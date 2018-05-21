@@ -227,18 +227,16 @@
         box-sizing: border-box;
         background: rgba($color-grey-dark-3, .9);
         color: $color-grey-light-2;
-        // background-color: pink;
 
         &-pagination,
         &-movie {
-            position: relative;
-            top: 2.5rem;
-
+            
             & > ul {
-                width: 45rem;
-                @include absoluteCenter;
-                // background-color: yellow;
                 position: relative;
+                top: 1rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 45rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;

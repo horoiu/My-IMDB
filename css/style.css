@@ -438,18 +438,14 @@ body {
     box-sizing: border-box;
     background: rgba(51, 51, 51, 0.9);
     color: #eee; }
-    .content__buttons-pagination, .content__buttons-movie {
+    .content__buttons-pagination > ul, .content__buttons-movie > ul {
       position: relative;
-      top: 2.5rem; }
-      .content__buttons-pagination > ul, .content__buttons-movie > ul {
-        width: 45rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center; }
-        .content__buttons-pagination > ul > li, .content__buttons-movie > ul > li {
-          list-style-type: none; }
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 45rem;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      .content__buttons-pagination > ul > li, .content__buttons-movie > ul > li {
+        list-style-type: none; }

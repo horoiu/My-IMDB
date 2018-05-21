@@ -11,7 +11,6 @@ let movieController  = (function() {
             $.ajax({
                 url: `https://ancient-caverns-16784.herokuapp.com/movies/${id}`,
                 type: 'GET',
-                // data: data,
                 success: function(response) {
                     // console.log('Movie GET success: ', response);
 

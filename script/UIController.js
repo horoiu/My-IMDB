@@ -252,8 +252,7 @@ let UIController  = (function() {
     };
 
     let showMovieButtons = () => {
-        // console.log("inside 'showMovieButtons'");
-        let buttons; 
+        let buttons;
 
         if (data.accessToken) {       
             buttons =   `<ul>
@@ -275,7 +274,6 @@ let UIController  = (function() {
                             </li>
                         </ul>`
         };
-
         DOMStrings.movieBtnsContainer.innerHTML = buttons;
 
         //set eventListeners on each button
@@ -296,25 +294,25 @@ let UIController  = (function() {
 
         let deleteMovieBtn = document.querySelector('.content__movie--btns--delete');
         deleteMovieBtn.addEventListener('click', () => {
+
+            deleteMovieController.deleteMovie(data.movieID);
             clearContainer('movie');
             clearContainer('movieBtns');
-            deleteMovieController.deleteMovie();
         });
     };
 
     let clearContainer = (container) => {
-
         switch (container) {
             case 'movies':
                 DOMStrings.moviesContainer.innerHTML = '';  
                 break;
-                case 'movie':
+            case 'movie':
                 DOMStrings.movieContainer.innerHTML = '';  
                 break;
-                case 'pagination':
+            case 'pagination':
                 DOMStrings.paginationBtnsContainer.innerHTML = '';
                 break;
-                case 'movieBtns':
+            case 'movieBtns':
                 DOMStrings.movieBtnsContainer.innerHTML = '';
                 break;
             default: 
