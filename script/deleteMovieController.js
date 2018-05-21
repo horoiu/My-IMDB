@@ -2,6 +2,11 @@ let deleteMovieController = (function() {
 
     let deleteMovie = (id) => {
 
+        let title, alert;
+        title = (UIController.getData()).movieResponse.Title;
+        alert = window.confirm(`Are you sure you want to delete "${title}" movie ?`);
+        if (!alert) return;
+
         let token, header;
         token = userController.getTokenCookie();
         header = new Headers();

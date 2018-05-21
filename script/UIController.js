@@ -294,10 +294,7 @@ let UIController  = (function() {
 
         let deleteMovieBtn = document.querySelector('.content__movie--btns--delete');
         deleteMovieBtn.addEventListener('click', () => {
-
             deleteMovieController.deleteMovie(data.movieID);
-            clearContainer('movie');
-            clearContainer('movieBtns');
         });
     };
 

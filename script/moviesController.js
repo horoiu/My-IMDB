@@ -51,7 +51,7 @@ let moviesController  = (function() {
                     // console.log('getMovies is done');
                 },
                 error: function(response) {
-                    console.log('Movies GET error: ', response);
+                    console.log('Movies GET error: ', response.status, response.statusText);
                     
                 }
             })

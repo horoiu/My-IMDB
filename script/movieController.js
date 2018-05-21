@@ -22,13 +22,10 @@ let movieController  = (function() {
                     // // show movie buttons
                     UIController.showMovieButtons();
 
-
-
-
                     // // console.log('getMovie is done');
                 },
                 error: function(response) {
-                    console.log('Movie GET error: ', response);
+                    console.log('Movie GET error: ', response.status, response.statusText);
                 }
             })
         }); 
