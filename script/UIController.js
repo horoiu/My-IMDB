@@ -6,7 +6,6 @@ let UIController  = (function() {
         headerLoginBtn: document.querySelector('.header__btn--login'),
         headerLogoutBtn: document.querySelector('.header__btn--logout'),
         headerRegisterBtn: document.querySelector('.header__btn--register'),
-        headerAddMovieBtn: document.querySelector('.header__btn--addMovie'),
         registerUser: document.querySelector('.modal__register-inputs--user'),
         registerPass1: document.querySelector('.modal__register-inputs--pass1'),
         registerPass2: document.querySelector('.modal__register-inputs--pass2'),
@@ -256,28 +255,34 @@ let UIController  = (function() {
 
         if (data.accessToken) {       
             buttons =   `<ul>
-                            <li class="content__movie--btns--back btn-2">
+                            <li class="content__movie-btns--back btn-2">
                                 <span>Go Back</span>
                             </li>
-                            <li class="content__movie--btns--edit btn-2">
+                            <li class="content__movie-btns--add btn-2">
+                                <span>Add Movie</span>
+                            </li>
+                            <li class="content__movie-btns--edit btn-2">
                                 <span>Edit Movie</span>
                             </li>
-                            <li class="content__movie--btns--delete btn-2">
+                            <li class="content__movie-btns--delete btn-2">
                                 <span>Delete Movie</span>
                             </li>
                         </ul>`
 
         } else {
             buttons =   `<ul>
-                            <li class="content__movie--btns--back btn-2">
+                            <li class="content__movie-btns--back btn-2">
                                 <span>Go Back</span>
+                            </li>
+                            <li class="content__movie-btns--add btn-2">
+                                <span>Add Movie</span>
                             </li>
                         </ul>`
         };
         DOMStrings.movieBtnsContainer.innerHTML = buttons;
 
         //set eventListeners on each button
-        let goBackBtn = document.querySelector('.content__movie--btns--back');
+        let goBackBtn = document.querySelector('.content__movie-btns--back');
         goBackBtn.addEventListener('click', () => {
             let page = (getData()).moviesResponse.pagination.links.self;
             clearContainer('movie');
@@ -285,14 +290,23 @@ let UIController  = (function() {
             moviesController.getMovies(page);
         });
 
-        let editMovieBtn = document.querySelector('.content__movie--btns--edit');
+        let addMovieBtn = document.querySelector('.content__movie-btns--add');
+        addMovieBtn.addEventListener('click', () => {
+            clearContainer('movie');
+            clearContainer('movies');
+            clearContainer('movieBtns');
+            clearContainer('pagination');
+            addMovieController.addMovie();
+        });
+
+        let editMovieBtn = document.querySelector('.content__movie-btns--edit');
         editMovieBtn.addEventListener('click', () => {
             clearContainer('movie');
             clearContainer('movieBtns');
             editMovieController.editMovie();
         });
 
-        let deleteMovieBtn = document.querySelector('.content__movie--btns--delete');
+        let deleteMovieBtn = document.querySelector('.content__movie-btns--delete');
         deleteMovieBtn.addEventListener('click', () => {
             deleteMovieController.deleteMovie(data.movieID);
         });
@@ -387,7 +401,6 @@ let UIController  = (function() {
             DOMStrings.headerLoginBtn.classList.toggle('hidden');
             DOMStrings.headerRegisterBtn.classList.toggle('hidden');
             DOMStrings.headerLogoutBtn.classList.toggle('hidden');
-            DOMStrings.headerAddMovieBtn.classList.toggle('hidden');
         },
         
         getDOMStrings,

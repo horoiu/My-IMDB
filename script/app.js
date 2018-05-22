@@ -28,14 +28,6 @@ let controller = (function() {
             userController.logoutRequest();
         };
 
-        DOM.headerAddMovieBtn.addEventListener('click', () => {
-            UIController.clearContainer('movie');
-            UIController.clearContainer('movies');
-            UIController.clearContainer('movieBtns');
-            UIController.clearContainer('pagination');
-            addMovieController.addMovie();
-        });
-
         DOM.modal.onclick = (event) => {                     
             if (event.target.className === 'modal') {
                 UIController.hideModal(); 
